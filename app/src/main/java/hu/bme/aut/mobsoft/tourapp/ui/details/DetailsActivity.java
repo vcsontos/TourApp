@@ -1,4 +1,4 @@
-package hu.bme.aut.mobsoft.tourapp.ui.main;
+package hu.bme.aut.mobsoft.tourapp.ui.details;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,15 +8,19 @@ import javax.inject.Inject;
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.TourApplication;
 
-public class MainActivity extends AppCompatActivity implements MainScreen {
+/**
+ * Created by valentin on 2017. 03. 27..
+ */
+
+public class DetailsActivity extends AppCompatActivity implements DetailsScreen {
 
     @Inject
-    MainPresenter mainPresenter;
+    DetailsPresenter detailsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_details);
 
         TourApplication.injector.inject(this);
     }
@@ -24,13 +28,18 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     @Override
     protected void onStart() {
         super.onStart();
-        mainPresenter.attachScreen(this);
+        detailsPresenter.attachScreen(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mainPresenter.detachScreen();
+        detailsPresenter.detachScreen();
+    }
+
+    @Override
+    public void showMessage(int messageId) {
+
     }
 
     @Override
@@ -44,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
     }
 
     @Override
-    public void showMessage(int messageId) {
+    public void showTourDetail() {
 
     }
 
     @Override
-    public void showTours(String toursSearchTerm) {
+    public void refreshTourMembers(int value) {
 
     }
 }
