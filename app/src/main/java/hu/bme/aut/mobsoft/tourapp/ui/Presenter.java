@@ -1,10 +1,11 @@
-package hu.bme.aut.mobsoft.tourapp;
+package hu.bme.aut.mobsoft.tourapp.ui;
 
 /**
  * Created by mobsoft on 2017. 03. 27..
  */
 
 public abstract class Presenter<S> {
+
     protected S screen;
 
     public void attachScreen(S screen) {
