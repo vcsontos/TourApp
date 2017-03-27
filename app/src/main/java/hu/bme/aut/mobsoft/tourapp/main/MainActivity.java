@@ -1,7 +1,9 @@
-package hu.bme.aut.mobsoft.tourapp;
+package hu.bme.aut.mobsoft.tourapp.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import hu.bme.aut.mobsoft.tourapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
