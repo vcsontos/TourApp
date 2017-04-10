@@ -2,6 +2,9 @@ package hu.bme.aut.mobsoft.tourapp;
 
 import android.app.Application;
 
+import javax.inject.Inject;
+
+import hu.bme.aut.mobsoft.tourapp.repository.Repository;
 import hu.bme.aut.mobsoft.tourapp.ui.UIModule;
 
 /**
@@ -9,6 +12,9 @@ import hu.bme.aut.mobsoft.tourapp.ui.UIModule;
  */
 
 public class TourApplication extends Application {
+
+    @Inject
+    Repository repository;
 
     public static TourApplicationComponent injector;
 
@@ -20,5 +26,8 @@ public class TourApplication extends Application {
                         uIModule(
                                 new UIModule(this)
                         ).build();
+
+        injector.inject(this);
+        repository.open(getApplicationContext());
     }
 }
