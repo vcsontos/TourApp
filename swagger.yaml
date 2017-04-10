@@ -1,0 +1,478 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "1.0.0"
+  title: TourApp
+  
+# the domain of the service
+host: tourapp.mobsoft.aut.bme.hu
+# array of all schemes that your API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /v1
+produces:
+  - application/json
+
+# Describe your paths here
+paths:
+  # This is a path endpoint. Change it.
+  /login:
+    # This is a HTTP operation
+    post:
+      # Describe this verb here. Note: you can use markdown
+      # This is array of GET operation parameters:
+      summary: Person login
+      tags:
+        - Person
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: username
+          in: formData
+          description: Username of the person
+          required: true
+          type: string
+        -
+          name: password
+          in: formData
+          description: Password of the person
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            $ref: '#/definitions/Person'
+        401:
+          description: Invalid credentials
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /tours:
+    # This is a HTTP operation
+    get:
+      # Describe this verb here. Note: you can use markdown
+      summary: Get main properties of tours
+      tags:
+        - TourHeader
+      description: |
+        Gets `Tours` objects.
+        Optional query param of **size** determines size of returned array
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+        -
+          name: size
+          in: query
+          description: Size of array
+          required: true
+          type: integer
+          format: int32
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            title: ArrayOfTours
+            type: array
+            items:
+              $ref: '#/definitions/TourHeader'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      # Describe this verb here. Note: you can use markdown
+      summary: Create new tour
+      tags:
+        - Tour
+      description: |
+        Gets `Tour` object.
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+        -
+          name: image
+          in: formData
+          description: Image url of the tour
+          required: false
+          type: string
+        -
+          name: start_date
+          in: formData
+          description: Start date of the tour
+          required: true
+          type: string
+          format: date
+        -
+          name: location
+          in: formData
+          description: Location of the tour
+          required: true
+          type: string
+        -
+          name: distance
+          in: formData
+          description: Name of the tour
+          required: true
+          type: integer
+          format: int32
+        -
+          name: difficulty
+          in: formData
+          description: Name of the tour
+          required: true
+          type: string
+        -
+          name: category
+          in: formData
+          description: Name of the tour
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            type: object
+            properties:
+              tour_id:
+                type: string
+                description: Unique identifier representing a specific tour.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /tours/{id}:
+    # This is a HTTP operation
+    get:
+      # Describe this verb here. Note: you can use markdown
+      summary: Get tour details
+      tags:
+        - Tour
+      description: |
+        Gets `Tour` object.
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: id
+          in: path
+          description: Identification of tour
+          required: true
+          type: string
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            $ref: '#/definitions/Tour'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      # Describe this verb here. Note: you can use markdown
+      summary: Delete tour
+      tags:
+        - Tour
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: id
+          in: path
+          description: Identification of tour
+          required: true
+          type: string
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            type: object
+            properties:
+              tour_id:
+                type: string
+                description: Unique identifier representing a specific tour.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /my_tours:
+    # This is a HTTP operation
+    get:
+      # Describe this verb here. Note: you can use markdown
+      summary: Get main properties of my tours
+      tags:
+        - TourHeader
+      description: |
+        Gets My `Tours` objects.
+      # This is array of GET operation parameters:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            title: ArrayOfTours
+            type: array
+            items:
+              $ref: '#/definitions/TourHeader'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /tour/{id}/connect:
+    # This is a HTTP operation
+    post:
+      # Describe this verb here. Note: you can use markdown
+      summary: User connect to a tour
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: id
+          in: path
+          description: Identification of tour
+          required: true
+          type: string
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            type: object
+            properties:
+              tour_id:
+                type: string
+                description: Unique identifier representing a specific tour.
+              members:
+                type: integer
+                format: int32
+        403:
+          description: You have already joined.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /tour/{id}/disconnect:
+    # This is a HTTP operation
+    post:
+      # Describe this verb here. Note: you can use markdown
+      summary: User disconnect from a tour
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: id
+          in: path
+          description: Identification of tour
+          required: true
+          type: string
+        -
+          name: token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
+          schema:
+            type: object
+            properties:
+              tour_id:
+                type: string
+                description: Unique identifier representing a specific tour.
+              members:
+                type: integer
+                format: int32
+        403:
+          description: You have already disconnected.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  TourHeader:
+    type: object
+    properties:
+      tour_id:
+        type: string
+        description: Unique identifier representing a specific tour.
+      tour_name:
+        type: string
+        description: Display name of tour.
+      category:
+        type: string
+        description: Category of tour [walking, cycling, water tour, mountain]
+      start_date:
+        type: string
+        format: date-time
+        description: Start date of tour
+      difficulty:
+        type: string
+        description: Difficulty of tour [easy, medium, hard]
+      members:
+        type: integer
+        format: int32
+        description: Number of participants of the tour
+      is_owner:
+        type: boolean
+        description: Current user is the owner of the tour
+      is_member:
+        type: boolean
+        description: Current user is member of the tour
+  Tour:
+    type: object
+    properties:
+      tour_id:
+        type: string
+        description: Unique identifier representing a specific tour.
+      description:
+        type: string
+        description: Description of tour.
+      tour_name:
+        type: string
+        description: Display name of tour.
+      tour_location:
+        type: string
+        description: Location of tour.
+      image:
+        type: string
+        description: Image URL representing the tour.
+      start_date:
+        type: string
+        format: date-time
+        description: Start date of tour
+      distance:
+        type: number
+        format: double
+        description: Distance of tour
+      difficulty:
+        type: string
+        description: Difficulty of tour [easy, medium, hard]
+      tour_leader:
+        $ref: '#/definitions/Person'
+      category:
+        type: string
+        description: Category of tour [walking, cycling, water tour, mountain]
+      members:
+        type: array
+        items:
+          $ref: '#/definitions/PersonHeader'
+  PersonHeader:
+    type: object
+    properties:
+      person_id:
+        type: string
+        description: Unique identifier representing a specific person.
+      person_name:
+        type: string
+        description: Name of person
+  Person:
+    type: object
+    properties:
+      person_id:
+        type: string
+        description: Unique identifier representing a specific person.
+      auth_token:
+        type: string
+        description: Every login generate a new token which identify the person
+      person_name:
+        type: string
+        description: Name of person
+      image:
+        type: string
+        description: Image URL representing the person.
+      age:
+        type: integer
+        format: int32
+        description: Age of the person
+      gender:
+        type: string
+        description: Gender of the person [male, female]
+      experience:
+        type: string
+        description: Experience of the person [beginner, advanced, master]
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+          
