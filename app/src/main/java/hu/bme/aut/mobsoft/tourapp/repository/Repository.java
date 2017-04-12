@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.List;
 
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
-import hu.bme.aut.mobsoft.tourapp.model.TourHeader;
 
 /**
  * Created by mobsoft on 2017. 04. 10..
@@ -17,11 +16,9 @@ public interface Repository {
 
     void close();
 
-    List<TourHeader> getTours();
+    List<Tour> getTours();
 
-    List<TourHeader> getMyTours();
-
-    Tour getTour(TourHeader tourHeader);
+    List<Tour> getMyTours();
 
     void saveTour(Tour tour);
 

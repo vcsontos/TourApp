@@ -2,6 +2,9 @@ package hu.bme.aut.mobsoft.tourapp.model;
 
 import com.orm.dsl.Table;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by mobsoft on 2017. 04. 10..
  */
@@ -10,14 +13,21 @@ import com.orm.dsl.Table;
 public class Person {
 
     private Long id = null;
-    private PersonHeader personHeader;
+    private String personName;
     private String authToken;
+    private Date expiredDate;
     private String profilePhotoUrl;
     private int age;
     private Gender gender;
     private Experience experience;
+    private List<Tour> myTours;
 
     public Person() {
+    }
+
+    public Person(Long id, String personName) {
+        this.id = id;
+        this.personName = personName;
     }
 
     public Long getId() {
@@ -28,12 +38,12 @@ public class Person {
         this.id = id;
     }
 
-    public PersonHeader getPersonHeader() {
-        return personHeader;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setPersonHeader(PersonHeader personHeader) {
-        this.personHeader = personHeader;
+    public void setPersonName(String personName) {
+        this.personName = personName;
     }
 
     public String getAuthToken() {
@@ -42,6 +52,14 @@ public class Person {
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
+    }
+
+    public Date getExpiredDate() {
+        return expiredDate;
+    }
+
+    public void setExpiredDate(Date expiredDate) {
+        this.expiredDate = expiredDate;
     }
 
     public String getProfilePhotoUrl() {
@@ -74,5 +92,13 @@ public class Person {
 
     public void setExperience(Experience experience) {
         this.experience = experience;
+    }
+
+    public List<Tour> getMyTours() {
+        return myTours;
+    }
+
+    public void setMyTours(List<Tour> myTours) {
+        this.myTours = myTours;
     }
 }

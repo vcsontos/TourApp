@@ -1,36 +1,29 @@
-# Example YAML to get you started quickly.
-# Be aware that YAML has indentation based scoping.
-# Code completion support is available so start typing for available options.
 swagger: '2.0'
 
-# This is your document metadata
 info:
   version: "1.0.0"
   title: TourApp
+  description: A simple Tour Store API
   
 # the domain of the service
 host: tourapp.mobsoft.aut.bme.hu
-# array of all schemes that your API supports
+# array of all schemes that my API supports
 schemes:
   - https
 # will be prefixed to all paths
-basePath: /v1
+basePath: /api/v1
+consumes:
+  - application/json
 produces:
   - application/json
 
-# Describe your paths here
 paths:
-  # This is a path endpoint. Change it.
   /login:
-    # This is a HTTP operation
     post:
-      # Describe this verb here. Note: you can use markdown
-      # This is array of GET operation parameters:
-      summary: Person login
+      operationId: login
       tags:
         - Person
       parameters:
-        # An example parameter that is in query and is required
         -
           name: username
           in: formData
@@ -43,251 +36,107 @@ paths:
           description: Password of the person
           required: true
           type: string
-      # Expected responses for this operation:
       responses:
-        # Response code
         200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
+          description: Return datas of the person
           schema:
-            $ref: '#/definitions/Person'
+            $ref: '#/definitions/User'
         401:
           description: Invalid credentials
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ErrorResponse'
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ErrorResponse'
   /tours:
-    # This is a HTTP operation
     get:
-      # Describe this verb here. Note: you can use markdown
-      summary: Get main properties of tours
+      operationId: findTours
       tags:
-        - TourHeader
+        - Tour
       description: |
-        Gets `Tours` objects.
-        Optional query param of **size** determines size of returned array
-      # This is array of GET operation parameters:
+        Returns all `Tours` of the system
       parameters:
-        # An example parameter that is in query and is required
         -
-          name: token
+          name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
-        -
-          name: size
+        - 
+          name: tags
           in: query
-          description: Size of array
-          required: true
+          description: Tags used to filter the result
+          required: false
+          type: array
+          items:
+            type: string
+          collectionFormat: csv
+        -
+          name: limit
+          in: query
+          description: Maximum number of results to return
+          required: false
           type: integer
           format: int32
-      # Expected responses for this operation:
       responses:
-        # Response code
         200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
+          description: List of tours
           schema:
             title: ArrayOfTours
             type: array
             items:
-              $ref: '#/definitions/TourHeader'
+              $ref: '#/definitions/Tour'
+        401:
+          description: Session token expired.
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
-    put:
-      # Describe this verb here. Note: you can use markdown
-      summary: Create new tour
+            $ref: '#/definitions/ErrorResponse'
+    post:
       tags:
         - Tour
-      description: |
-        Gets `Tour` object.
-      # This is array of GET operation parameters:
+      description: Create `Tour` object
       parameters:
-        # An example parameter that is in query and is required
         -
-          name: token
+          name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
-        -
-          name: image
-          in: formData
-          description: Image url of the tour
-          required: false
-          type: string
-        -
-          name: start_date
-          in: formData
-          description: Start date of the tour
+        - name: tour
+          in: body
+          description: Create tour
           required: true
-          type: string
-          format: date
-        -
-          name: location
-          in: formData
-          description: Location of the tour
-          required: true
-          type: string
-        -
-          name: distance
-          in: formData
-          description: Name of the tour
-          required: true
-          type: integer
-          format: int32
-        -
-          name: difficulty
-          in: formData
-          description: Name of the tour
-          required: true
-          type: string
-        -
-          name: category
-          in: formData
-          description: Name of the tour
-          required: true
-          type: string
-      # Expected responses for this operation:
-      responses:
-        # Response code
-        200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
-          schema:
-            type: object
-            properties:
-              tour_id:
-                type: string
-                description: Unique identifier representing a specific tour.
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-  /tours/{id}:
-    # This is a HTTP operation
-    get:
-      # Describe this verb here. Note: you can use markdown
-      summary: Get tour details
-      tags:
-        - Tour
-      description: |
-        Gets `Tour` object.
-      # This is array of GET operation parameters:
-      parameters:
-        # An example parameter that is in query and is required
-        -
-          name: id
-          in: path
-          description: Identification of tour
-          required: true
-          type: string
-        -
-          name: token
-          in: header
-          description: Authentication of the person
-          required: true
-          type: string
-      # Expected responses for this operation:
-      responses:
-        # Response code
-        200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
           schema:
             $ref: '#/definitions/Tour'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      # Describe this verb here. Note: you can use markdown
-      summary: Delete tour
-      tags:
-        - Tour
-      # This is array of GET operation parameters:
-      parameters:
-        # An example parameter that is in query and is required
-        -
-          name: id
-          in: path
-          description: Identification of tour
-          required: true
-          type: string
-        -
-          name: token
-          in: header
-          description: Authentication of the person
-          required: true
-          type: string
-      # Expected responses for this operation:
       responses:
-        # Response code
-        200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
+        201:
+          description: New resource created
           schema:
             type: object
             properties:
               tour_id:
                 type: string
                 description: Unique identifier representing a specific tour.
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        401:
+          description: Session token expired.
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
-  /my_tours:
-    # This is a HTTP operation
+            $ref: '#/definitions/ErrorResponse'
+  /tours/{id}:
     get:
-      # Describe this verb here. Note: you can use markdown
-      summary: Get main properties of my tours
+      operationId: findTourById
       tags:
-        - TourHeader
+        - Tour
       description: |
-        Gets My `Tours` objects.
-      # This is array of GET operation parameters:
+        Gets `Tour` object.
       parameters:
-        # An example parameter that is in query and is required
-        -
-          name: token
-          in: header
-          description: Authentication of the person
-          required: true
-          type: string
-      # Expected responses for this operation:
-      responses:
-        # Response code
-        200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
-          schema:
-            title: ArrayOfTours
-            type: array
-            items:
-              $ref: '#/definitions/TourHeader'
-        default:
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-  /tour/{id}/connect:
-    # This is a HTTP operation
-    post:
-      # Describe this verb here. Note: you can use markdown
-      summary: User connect to a tour
-      parameters:
-        # An example parameter that is in query and is required
         -
           name: id
           in: path
@@ -295,18 +144,105 @@ paths:
           required: true
           type: string
         -
-          name: token
+          name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
-      # Expected responses for this operation:
       responses:
-        # Response code
         200:
           description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
+          schema:
+            $ref: '#/definitions/Tour'
+        401:
+          description: Session token expired.
+        404:
+          description: Tour does not exist.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      description: Delete `Tour`
+      operationId: deleteTour
+      tags:
+        - Tour
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identification of tour
+          required: true
+          type: string
+        -
+          name: X-Auth-Token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      responses:
+        204:
+          description: Successful delete
+        401:
+          description: Session token expired.
+        404:
+          description: Tour does not exist 
+        410:
+          description: Tour already deleted
+        403:
+          description: Users does not have permission
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /my_tours:
+    get:
+      operationId: findMyTours
+      tags:
+        - Tour
+      description: |
+        Gets My `Tours` objects.
+      parameters:
+        -
+          name: X-Auth-Token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      responses:
+        200:
+          description: Return tours of the user
+          schema:
+            title: ArrayOfTours
+            type: array
+            items:
+              $ref: '#/definitions/Tour'
+        401:
+          description: Session token expired.
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /tour/{id}/connect:
+    post:
+      operationId: connectTour
+      description: User connect to a `Tour`
+      parameters:
+        -
+          name: id
+          in: path
+          description: Identification of tour
+          required: true
+          type: string
+        -
+          name: X-Auth-Token
+          in: header
+          description: Authentication of the person
+          required: true
+          type: string
+      responses:
+        200:
+          description: Successful connect
           schema:
             type: object
             properties:
@@ -316,19 +252,19 @@ paths:
               members:
                 type: integer
                 format: int32
+        401:
+          description: Session token expired.
         403:
           description: You have already joined.
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ErrorResponse'
   /tour/{id}/disconnect:
-    # This is a HTTP operation
     post:
-      # Describe this verb here. Note: you can use markdown
-      summary: User disconnect from a tour
+      operationId: disconnectTour
+      description: User disconnect from a `Tour`
       parameters:
-        # An example parameter that is in query and is required
         -
           name: id
           in: path
@@ -336,18 +272,14 @@ paths:
           required: true
           type: string
         -
-          name: token
+          name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
-      # Expected responses for this operation:
       responses:
-        # Response code
         200:
-          description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
+          description: Successful disconnect
           schema:
             type: object
             properties:
@@ -357,15 +289,24 @@ paths:
               members:
                 type: integer
                 format: int32
+        401:
+          description: Session token expired.
         403:
           description: You have already disconnected.
         default:
           description: Unexpected error
           schema:
-            $ref: '#/definitions/Error'
+            $ref: '#/definitions/ErrorResponse'
 definitions:
-  TourHeader:
+  Tour:
     type: object
+    required:
+      - tour_id
+      - tour_name
+      - category
+      - start_date
+      - tour_location
+      - tour_leader
     properties:
       tour_id:
         type: string
@@ -383,56 +324,30 @@ definitions:
       difficulty:
         type: string
         description: Difficulty of tour [easy, medium, hard]
-      members:
-        type: integer
-        format: int32
-        description: Number of participants of the tour
-      is_owner:
-        type: boolean
-        description: Current user is the owner of the tour
-      is_member:
-        type: boolean
-        description: Current user is member of the tour
-  Tour:
-    type: object
-    properties:
-      tour_id:
-        type: string
-        description: Unique identifier representing a specific tour.
-      description:
-        type: string
-        description: Description of tour.
-      tour_name:
-        type: string
-        description: Display name of tour.
-      tour_location:
-        type: string
-        description: Location of tour.
-      image:
-        type: string
-        description: Image URL representing the tour.
-      start_date:
-        type: string
-        format: date-time
-        description: Start date of tour
       distance:
         type: number
         format: double
         description: Distance of tour
-      difficulty:
+      description:
         type: string
-        description: Difficulty of tour [easy, medium, hard]
+        description: Description of tour.
+      tour_location:
+        type: string
+        description: Location of tour.
+      image_url:
+        type: string
+        description: Image URL representing the tour.
       tour_leader:
-        $ref: '#/definitions/Person'
-      category:
-        type: string
-        description: Category of tour [walking, cycling, water tour, mountain]
+        $ref: '#/definitions/User'
       members:
         type: array
         items:
-          $ref: '#/definitions/PersonHeader'
-  PersonHeader:
+          $ref: '#/definitions/User'
+  User:
     type: object
+    required:
+      - person_id
+      - person_name
     properties:
       person_id:
         type: string
@@ -440,19 +355,14 @@ definitions:
       person_name:
         type: string
         description: Name of person
-  Person:
-    type: object
-    properties:
-      person_id:
-        type: string
-        description: Unique identifier representing a specific person.
       auth_token:
         type: string
         description: Every login generate a new token which identify the person
-      person_name:
+      expired_date:
         type: string
-        description: Name of person
-      image:
+        format: date-time
+        description: Expired date of authorization token 
+      profile_photo_url:
         type: string
         description: Image URL representing the person.
       age:
@@ -465,14 +375,18 @@ definitions:
       experience:
         type: string
         description: Experience of the person [beginner, advanced, master]
-  Error:
+      my_tours:
+        type: array
+        items:
+          $ref: '#/definitions/Tour'
+  ErrorResponse:
     type: object
+    required:
+      - code
+      - message
     properties:
       code:
         type: integer
         format: int32
       message:
         type: string
-      fields:
-        type: string
-          

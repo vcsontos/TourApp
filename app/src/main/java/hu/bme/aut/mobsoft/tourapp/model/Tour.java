@@ -2,6 +2,8 @@ package hu.bme.aut.mobsoft.tourapp.model;
 
 import com.orm.dsl.Table;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,16 +14,25 @@ import java.util.List;
 public class Tour {
 
     private Long id = null;
-    private TourHeader tourHeader;
+    private String name;
+    private Category category;
+    private Date startDate;
+    private Difficulty difficulty;
+    private double distance;
     private String description;
     private String location;
     private String imageUrl;
-    private double distance;
     private Person tourLeader;
-    private List<PersonHeader> members;
+    private List<Person> members;
 
     public Tour() {
 
+    }
+
+    public Tour(Long id, String name) {
+        this.id = id;
+        this.name = name;
+        members = new ArrayList<>();
     }
 
     public Long getId() {
@@ -32,12 +43,44 @@ public class Tour {
         this.id = id;
     }
 
-    public TourHeader getTourHeader() {
-        return tourHeader;
+    public String getName() {
+        return name;
     }
 
-    public void setTourHeader(TourHeader tourHeader) {
-        this.tourHeader = tourHeader;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public String getDescription() {
@@ -64,14 +107,6 @@ public class Tour {
         this.imageUrl = imageUrl;
     }
 
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
     public Person getTourLeader() {
         return tourLeader;
     }
@@ -80,11 +115,29 @@ public class Tour {
         this.tourLeader = tourLeader;
     }
 
-    public List<PersonHeader> getMembers() {
+    public List<Person> getMembers() {
         return members;
     }
 
-    public void setMembers(List<PersonHeader> members) {
-        this.members = members;
+    public void setMembers(List<Person> members) {
+        if (members == null) {
+            this.members = new ArrayList<>();
+        } else {
+            this.members = members;
+        }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tour tour = (Tour) o;
+
+        if (id != null ? !id.equals(tour.id) : tour.id != null) return false;
+        if (name != null ? !name.equals(tour.name) : tour.name != null) return false;
+        return members != null ? members.equals(tour.members) : tour.members == null;
+
+    }
+
 }
