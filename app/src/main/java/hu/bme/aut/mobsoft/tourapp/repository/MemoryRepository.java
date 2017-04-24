@@ -11,8 +11,8 @@ import hu.bme.aut.mobsoft.tourapp.model.Category;
 import hu.bme.aut.mobsoft.tourapp.model.Difficulty;
 import hu.bme.aut.mobsoft.tourapp.model.Experience;
 import hu.bme.aut.mobsoft.tourapp.model.Gender;
-import hu.bme.aut.mobsoft.tourapp.model.Person;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
+import hu.bme.aut.mobsoft.tourapp.model.User;
 
 /**
  * Created by mobsoft on 2017. 04. 10..
@@ -22,21 +22,21 @@ public class MemoryRepository implements Repository {
 
     public static List<Tour> tours;
     public static List<Tour> myTours;
-    public static Person loggedInPerson;
+    public static User loggedInPerson;
 
     @Override
     public void open(Context context) {
 
-        Person tourLeader = new Person(1L, "Gipsz Jakab");
+        User tourLeader = new User("1L", "Gipsz Jakab");
         tourLeader.setAge(40);
 
-        Tour tour1 = createTour(1L, "Nagy-Kevely", Category.WALKING, Difficulty.EASY,
+        Tour tour1 = createTour("1L", "Nagy-Kevely", Category.WALKING, Difficulty.EASY,
                 addDays(new Date(), 1), 5.0, "", "", "", tourLeader, null);
 
-        Tour tour2 = createTour(2L, "Cserna rafting tour", Category.WATER, Difficulty.HARD,
+        Tour tour2 = createTour("2L", "Cserna rafting tour", Category.WATER, Difficulty.HARD,
                 addDays(new Date(), 10), 50.0, "", "", "", tourLeader, null);
 
-        Tour tour3 = createTour(3L, "Balaton-round", Category.CYCLING, Difficulty.MEDIUM,
+        Tour tour3 = createTour("3L", "Balaton-round", Category.CYCLING, Difficulty.MEDIUM,
                 addDays(new Date(), 15), 200.0, "", "", "", tourLeader, null);
 
         tours = new ArrayList<>();
@@ -48,7 +48,7 @@ public class MemoryRepository implements Repository {
         myTours.add(tour1);
         myTours.add(tour3);
 
-        loggedInPerson = new Person(2L, "Teszt Elek");
+        loggedInPerson = new User("2L", "Teszt Elek");
         loggedInPerson.setAge(20);
         loggedInPerson.setAuthToken("1234567");
         loggedInPerson.setExpiredDate(addDays(new Date(), 10));
@@ -97,9 +97,9 @@ public class MemoryRepository implements Repository {
         return tours.contains(tour);
     }
 
-    private Tour createTour(Long id, String name, Category category, Difficulty difficulty,
+    private Tour createTour(String id, String name, Category category, Difficulty difficulty,
                             Date startDate, double distance, String desc, String imageUrl,
-                            String location, Person tourLeader, List<Person> members) {
+                            String location, User tourLeader, List<User> members) {
         Tour tour = new Tour(id, name);
         tour.setCategory(category);
         tour.setDifficulty(difficulty);
@@ -107,7 +107,7 @@ public class MemoryRepository implements Repository {
         tour.setDistance(distance);
         tour.setDescription(desc);
         tour.setImageUrl(imageUrl);
-        tour.setLocation(location);
+        tour.setTourLocation(location);
         tour.setTourLeader(tourLeader);
         tour.setMembers(members);
         return tour;

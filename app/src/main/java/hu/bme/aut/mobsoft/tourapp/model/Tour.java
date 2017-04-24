@@ -1,56 +1,86 @@
 package hu.bme.aut.mobsoft.tourapp.model;
 
-import com.orm.dsl.Table;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by mobsoft on 2017. 04. 10..
- */
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-@Table
+
+@ApiModel(description = "")
 public class Tour {
 
-    private Long id = null;
-    private String name;
-    private Category category;
-    private Date startDate;
-    private Difficulty difficulty;
-    private double distance;
-    private String description;
-    private String location;
-    private String imageUrl;
-    private Person tourLeader;
-    private List<Person> members;
+    @SerializedName("tour_id")
+    private String tourId = null;
 
-    public Tour() {
+    @SerializedName("tour_name")
+    private String tourName = null;
 
+    @SerializedName("category")
+    private Category category = null;
+
+    @SerializedName("start_date")
+    private Date startDate = null;
+
+    @SerializedName("difficulty")
+    private Difficulty difficulty = null;
+
+    @SerializedName("distance")
+    private Double distance = null;
+
+    @SerializedName("description")
+    private String description = null;
+
+    @SerializedName("tour_location")
+    private String tourLocation = null;
+
+    @SerializedName("image_url")
+    private String imageUrl = null;
+
+    @SerializedName("tour_leader")
+    private User tourLeader = null;
+
+    @SerializedName("members")
+    private List<User> members = new ArrayList<User>();
+
+    public Tour(String tourId, String tourName) {
+        this.tourId = tourId;
+        this.tourName = tourName;
     }
 
-    public Tour(Long id, String name) {
-        this.id = id;
-        this.name = name;
-        members = new ArrayList<>();
+    /**
+     * Unique identifier representing a specific tour.
+     **/
+    @ApiModelProperty(required = true, value = "Unique identifier representing a specific tour.")
+    public String getTourId() {
+        return tourId;
     }
 
-    public Long getId() {
-        return id;
+    public void setTourId(String tourId) {
+        this.tourId = tourId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+
+    /**
+     * Display name of tour.
+     **/
+    @ApiModelProperty(required = true, value = "Display name of tour.")
+    public String getTourName() {
+        return tourName;
     }
 
-    public String getName() {
-        return name;
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
+    /**
+     * Category of tour [walking, cycling, water tour, mountain]
+     **/
+    @ApiModelProperty(required = true, value = "Category of tour [walking, cycling, water tour, mountain]")
     public Category getCategory() {
         return category;
     }
@@ -59,6 +89,11 @@ public class Tour {
         this.category = category;
     }
 
+
+    /**
+     * Start date of tour
+     **/
+    @ApiModelProperty(required = true, value = "Start date of tour")
     public Date getStartDate() {
         return startDate;
     }
@@ -67,6 +102,11 @@ public class Tour {
         this.startDate = startDate;
     }
 
+
+    /**
+     * Difficulty of tour [easy, medium, hard]
+     **/
+    @ApiModelProperty(value = "Difficulty of tour [easy, medium, hard]")
     public Difficulty getDifficulty() {
         return difficulty;
     }
@@ -75,14 +115,24 @@ public class Tour {
         this.difficulty = difficulty;
     }
 
-    public double getDistance() {
+
+    /**
+     * Distance of tour
+     **/
+    @ApiModelProperty(value = "Distance of tour")
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
+
+    /**
+     * Description of tour.
+     **/
+    @ApiModelProperty(value = "Description of tour.")
     public String getDescription() {
         return description;
     }
@@ -91,14 +141,24 @@ public class Tour {
         this.description = description;
     }
 
-    public String getLocation() {
-        return location;
+
+    /**
+     * Location of tour.
+     **/
+    @ApiModelProperty(required = true, value = "Location of tour.")
+    public String getTourLocation() {
+        return tourLocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setTourLocation(String tourLocation) {
+        this.tourLocation = tourLocation;
     }
 
+
+    /**
+     * Image URL representing the tour.
+     **/
+    @ApiModelProperty(value = "Image URL representing the tour.")
     public String getImageUrl() {
         return imageUrl;
     }
@@ -107,25 +167,30 @@ public class Tour {
         this.imageUrl = imageUrl;
     }
 
-    public Person getTourLeader() {
+
+    /**
+     **/
+    @ApiModelProperty(required = true, value = "")
+    public User getTourLeader() {
         return tourLeader;
     }
 
-    public void setTourLeader(Person tourLeader) {
+    public void setTourLeader(User tourLeader) {
         this.tourLeader = tourLeader;
     }
 
-    public List<Person> getMembers() {
+
+    /**
+     **/
+    @ApiModelProperty(value = "")
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(List<Person> members) {
-        if (members == null) {
-            this.members = new ArrayList<>();
-        } else {
-            this.members = members;
-        }
+    public void setMembers(List<User> members) {
+        this.members = members;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -134,10 +199,71 @@ public class Tour {
 
         Tour tour = (Tour) o;
 
-        if (id != null ? !id.equals(tour.id) : tour.id != null) return false;
-        if (name != null ? !name.equals(tour.name) : tour.name != null) return false;
+        if (tourId != null ? !tourId.equals(tour.tourId) : tour.tourId != null) return false;
+        if (tourName != null ? !tourName.equals(tour.tourName) : tour.tourName != null)
+            return false;
+        if (category != tour.category) return false;
+        if (startDate != null ? !startDate.equals(tour.startDate) : tour.startDate != null)
+            return false;
+        if (difficulty != tour.difficulty) return false;
+        if (distance != null ? !distance.equals(tour.distance) : tour.distance != null)
+            return false;
+        if (description != null ? !description.equals(tour.description) : tour.description != null)
+            return false;
+        if (tourLocation != null ? !tourLocation.equals(tour.tourLocation) : tour.tourLocation != null)
+            return false;
+        if (imageUrl != null ? !imageUrl.equals(tour.imageUrl) : tour.imageUrl != null)
+            return false;
+        if (tourLeader != null ? !tourLeader.equals(tour.tourLeader) : tour.tourLeader != null)
+            return false;
         return members != null ? members.equals(tour.members) : tour.members == null;
 
     }
 
+    @Override
+    public int hashCode() {
+        int result = tourId != null ? tourId.hashCode() : 0;
+        result = 31 * result + (tourName != null ? tourName.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (difficulty != null ? difficulty.hashCode() : 0);
+        result = 31 * result + (distance != null ? distance.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (tourLocation != null ? tourLocation.hashCode() : 0);
+        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
+        result = 31 * result + (tourLeader != null ? tourLeader.hashCode() : 0);
+        result = 31 * result + (members != null ? members.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Tour {\n");
+
+        sb.append("    tourId: ").append(toIndentedString(tourId)).append("\n");
+        sb.append("    tourName: ").append(toIndentedString(tourName)).append("\n");
+        sb.append("    category: ").append(toIndentedString(category)).append("\n");
+        sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");
+        sb.append("    difficulty: ").append(toIndentedString(difficulty)).append("\n");
+        sb.append("    distance: ").append(toIndentedString(distance)).append("\n");
+        sb.append("    description: ").append(toIndentedString(description)).append("\n");
+        sb.append("    tourLocation: ").append(toIndentedString(tourLocation)).append("\n");
+        sb.append("    imageUrl: ").append(toIndentedString(imageUrl)).append("\n");
+        sb.append("    tourLeader: ").append(toIndentedString(tourLeader)).append("\n");
+        sb.append("    members: ").append(toIndentedString(members)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }
