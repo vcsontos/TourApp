@@ -1,47 +1,41 @@
 swagger: '2.0'
-
 info:
-  version: "1.0.0"
+  version: 1.0.0
   title: TourApp
   description: A simple Tour Store API
-  
-# the domain of the service
 host: tourapp.mobsoft.aut.bme.hu
-# array of all schemes that my API supports
 schemes:
   - https
-# will be prefixed to all paths
 basePath: /api/v1
 consumes:
   - application/json
 produces:
   - application/json
-
 paths:
   /login:
     post:
       operationId: login
       tags:
         - Person
+      consumes:
+        - application/x-www-form-urlencoded
       parameters:
-        -
-          name: username
+        - name: username
           in: formData
           description: Username of the person
           required: true
           type: string
-        -
-          name: password
+        - name: password
           in: formData
           description: Password of the person
           required: true
           type: string
       responses:
-        200:
+        '200':
           description: Return datas of the person
           schema:
             $ref: '#/definitions/User'
-        401:
+        '401':
           description: Invalid credentials
           schema:
             $ref: '#/definitions/ErrorResponse'
@@ -57,14 +51,12 @@ paths:
       description: |
         Returns all `Tours` of the system
       parameters:
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
-        - 
-          name: tags
+        - name: tags
           in: query
           description: Tags used to filter the result
           required: false
@@ -72,22 +64,21 @@ paths:
           items:
             type: string
           collectionFormat: csv
-        -
-          name: limit
+        - name: limit
           in: query
           description: Maximum number of results to return
           required: false
           type: integer
           format: int32
       responses:
-        200:
+        '200':
           description: List of tours
           schema:
             title: ArrayOfTours
             type: array
             items:
               $ref: '#/definitions/Tour'
-        401:
+        '401':
           description: Session token expired.
         default:
           description: Unexpected error
@@ -98,8 +89,7 @@ paths:
         - Tour
       description: Create `Tour` object
       parameters:
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
@@ -111,7 +101,7 @@ paths:
           schema:
             $ref: '#/definitions/Tour'
       responses:
-        201:
+        '201':
           description: New resource created
           schema:
             type: object
@@ -119,17 +109,17 @@ paths:
               tour_id:
                 type: string
                 description: Unique identifier representing a specific tour.
-        400:
+        '400':
           description: Bad request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        401:
+        '401':
           description: Session token expired.
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /tours/{id}:
+  '/tours/{id}':
     get:
       operationId: findTourById
       tags:
@@ -137,26 +127,24 @@ paths:
       description: |
         Gets `Tour` object.
       parameters:
-        -
-          name: id
+        - name: id
           in: path
           description: Identification of tour
           required: true
           type: string
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
       responses:
-        200:
+        '200':
           description: Successful response
           schema:
             $ref: '#/definitions/Tour'
-        401:
+        '401':
           description: Session token expired.
-        404:
+        '404':
           description: Tour does not exist.
         default:
           description: Unexpected error
@@ -168,29 +156,27 @@ paths:
       tags:
         - Tour
       parameters:
-        -
-          name: id
+        - name: id
           in: path
           description: Identification of tour
           required: true
           type: string
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
       responses:
-        204:
+        '204':
           description: Successful delete
-        401:
+        '401':
           description: Session token expired.
-        404:
-          description: Tour does not exist 
-        410:
-          description: Tour already deleted
-        403:
+        '403':
           description: Users does not have permission
+        '404':
+          description: Tour does not exist
+        '410':
+          description: Tour already deleted
         default:
           description: Unexpected error
           schema:
@@ -203,45 +189,44 @@ paths:
       description: |
         Gets My `Tours` objects.
       parameters:
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
       responses:
-        200:
+        '200':
           description: Return tours of the user
           schema:
             title: ArrayOfTours
             type: array
             items:
               $ref: '#/definitions/Tour'
-        401:
+        '401':
           description: Session token expired.
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /tour/{id}/connect:
+  '/tours/{id}/connect':
     post:
       operationId: connectTour
       description: User connect to a `Tour`
+      tags:
+        - Tour
       parameters:
-        -
-          name: id
+        - name: id
           in: path
           description: Identification of tour
           required: true
           type: string
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
       responses:
-        200:
+        '200':
           description: Successful connect
           schema:
             type: object
@@ -252,33 +237,33 @@ paths:
               members:
                 type: integer
                 format: int32
-        401:
+        '401':
           description: Session token expired.
-        403:
+        '403':
           description: You have already joined.
         default:
           description: Unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /tour/{id}/disconnect:
+  '/tours/{id}/disconnect':
     post:
       operationId: disconnectTour
+      tags:
+        - Tour
       description: User disconnect from a `Tour`
       parameters:
-        -
-          name: id
+        - name: id
           in: path
           description: Identification of tour
           required: true
           type: string
-        -
-          name: X-Auth-Token
+        - name: X-Auth-Token
           in: header
           description: Authentication of the person
           required: true
           type: string
       responses:
-        200:
+        '200':
           description: Successful disconnect
           schema:
             type: object
@@ -289,9 +274,9 @@ paths:
               members:
                 type: integer
                 format: int32
-        401:
+        '401':
           description: Session token expired.
-        403:
+        '403':
           description: You have already disconnected.
         default:
           description: Unexpected error
@@ -316,14 +301,14 @@ definitions:
         description: Display name of tour.
       category:
         type: string
-        description: Category of tour [walking, cycling, water tour, mountain]
+        description: 'Category of tour [walking, cycling, water tour, mountain]'
       start_date:
         type: string
         format: date-time
         description: Start date of tour
       difficulty:
         type: string
-        description: Difficulty of tour [easy, medium, hard]
+        description: 'Difficulty of tour [easy, medium, hard]'
       distance:
         type: number
         format: double
@@ -361,7 +346,7 @@ definitions:
       expired_date:
         type: string
         format: date-time
-        description: Expired date of authorization token 
+        description: Expired date of authorization token
       profile_photo_url:
         type: string
         description: Image URL representing the person.
@@ -371,10 +356,10 @@ definitions:
         description: Age of the person
       gender:
         type: string
-        description: Gender of the person [male, female]
+        description: 'Gender of the person [male, female]'
       experience:
         type: string
-        description: Experience of the person [beginner, advanced, master]
+        description: 'Experience of the person [beginner, advanced, master]'
       my_tours:
         type: array
         items:

@@ -3,7 +3,10 @@ package hu.bme.aut.mobsoft.tourapp;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginInteractor;
+import hu.bme.aut.mobsoft.tourapp.interactor.tours.ToursInteractor;
 import hu.bme.aut.mobsoft.tourapp.repository.RepositoryModule;
+import hu.bme.aut.mobsoft.tourapp.interactor.InteractorModule;
 import hu.bme.aut.mobsoft.tourapp.ui.UIModule;
 import hu.bme.aut.mobsoft.tourapp.ui.details.DetailsActivity;
 import hu.bme.aut.mobsoft.tourapp.ui.login.LoginActivity;
@@ -16,7 +19,7 @@ import hu.bme.aut.mobsoft.tourapp.ui.new_tour.NewTourActivity;
  */
 
 @Singleton
-@Component(modules = {UIModule.class, RepositoryModule.class})
+@Component(modules = {UIModule.class, RepositoryModule.class, InteractorModule.class})
 public interface TourApplicationComponent {
 
     void inject(TourApplication tourApplication);
@@ -25,9 +28,13 @@ public interface TourApplicationComponent {
 
     void inject(LoginActivity loginActivity);
 
+    void inject(LoginInteractor loginInteractor);
+
     void inject(DetailsActivity detailsActivity);
 
     void inject(NewTourActivity newTourActivity);
 
     void inject(MyToursActivity myToursActivity);
+
+    void inject(ToursInteractor toursInteractor);
 }

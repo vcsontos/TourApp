@@ -1,5 +1,8 @@
 package hu.bme.aut.mobsoft.tourapp.ui.login;
 
+import javax.inject.Inject;
+
+import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginInteractor;
 import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
 
 /**
@@ -7,6 +10,9 @@ import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
  */
 
 public class LoginPresenter extends Presenter<LoginScreen> {
+
+    @Inject
+    LoginInteractor loginInteractor;
 
     public LoginPresenter() {
     }

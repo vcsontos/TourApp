@@ -1,5 +1,8 @@
 package hu.bme.aut.mobsoft.tourapp.ui.new_tour;
 
+import javax.inject.Inject;
+
+import hu.bme.aut.mobsoft.tourapp.interactor.tours.ToursInteractor;
 import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
 
 /**
@@ -7,6 +10,9 @@ import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
  */
 
 public class NewTourPresenter extends Presenter<NewTourScreen> {
+
+    @Inject
+    ToursInteractor toursInteractor;
 
     public NewTourPresenter() {
     }
