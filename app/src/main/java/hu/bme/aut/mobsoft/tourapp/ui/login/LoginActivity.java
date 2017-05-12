@@ -14,6 +14,7 @@ import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.TourApplication;
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity implements LoginScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        ButterKnife.bind(this);
         TourApplication.injector.inject(this);
     }
 
