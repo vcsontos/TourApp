@@ -20,9 +20,9 @@ import hu.bme.aut.mobsoft.tourapp.model.User;
 
 public class MemoryRepository implements Repository {
 
-    public static List<Tour> tours;
-    public static List<Tour> myTours;
-    public static User loggedInPerson;
+    private static List<Tour> tours;
+    private static List<Tour> myTours;
+    private static User loggedInUser;
 
     @Override
     public void open(Context context) {
@@ -44,22 +44,28 @@ public class MemoryRepository implements Repository {
         tours.add(tour2);
         tours.add(tour3);
 
-        myTours = new ArrayList<>();
+        List<Tour> myTours = new ArrayList<>();
         myTours.add(tour1);
         myTours.add(tour3);
-
-        loggedInPerson = new User("2L", "Teszt Elek");
-        loggedInPerson.setAge(20);
-        loggedInPerson.setAuthToken("1234567");
-        loggedInPerson.setExpiredDate(addDays(new Date(), 10));
-        loggedInPerson.setExperience(Experience.ADVANCED);
-        loggedInPerson.setGender(Gender.MALE);
-        loggedInPerson.setMyTours(myTours);
     }
 
     @Override
     public void close() {
 
+    }
+
+    @Override
+    public User getUser(String username, String password) {
+
+        loggedInUser = new User("2L", username);
+        loggedInUser.setAge(20);
+        loggedInUser.setAuthToken("1234567");
+        loggedInUser.setExpiredDate(addDays(new Date(), 10));
+        loggedInUser.setExperience(Experience.ADVANCED);
+        loggedInUser.setGender(Gender.MALE);
+        loggedInUser.setMyTours(myTours);
+
+        return loggedInUser;
     }
 
     @Override
@@ -84,12 +90,12 @@ public class MemoryRepository implements Repository {
 
     @Override
     public void connectTour(Tour tour) {
-        tour.getMembers().add(loggedInPerson);
+        tour.getMembers().add(loggedInUser);
     }
 
     @Override
     public void disconnectTour(Tour tour) {
-        tour.getMembers().remove(loggedInPerson);
+        tour.getMembers().remove(loggedInUser);
     }
 
     @Override

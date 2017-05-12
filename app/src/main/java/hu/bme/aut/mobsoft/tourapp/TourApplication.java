@@ -18,6 +18,12 @@ public class TourApplication extends Application {
 
     public static TourApplicationComponent injector;
 
+    public void setInjector(TourApplicationComponent appComponent) {
+        injector = appComponent;
+        injector.inject(this);
+        repository.open(getApplicationContext());
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

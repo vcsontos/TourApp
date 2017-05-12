@@ -8,6 +8,7 @@ import com.orm.SugarRecord;
 import java.util.List;
 
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
+import hu.bme.aut.mobsoft.tourapp.model.User;
 
 /**
  * Created by mobsoft on 2017. 04. 10..
@@ -23,6 +24,11 @@ public class SugarOrmRepository implements Repository {
     @Override
     public void close() {
         SugarContext.terminate();
+    }
+
+    @Override
+    public User getUser(String username, String password) {
+        return null;
     }
 
     @Override

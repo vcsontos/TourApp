@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.List;
 
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
+import hu.bme.aut.mobsoft.tourapp.model.User;
 
 /**
  * Created by mobsoft on 2017. 04. 10..
@@ -15,6 +16,8 @@ public interface Repository {
     void open(Context context);
 
     void close();
+
+    User getUser(String username, String password);
 
     List<Tour> getTours();
 
