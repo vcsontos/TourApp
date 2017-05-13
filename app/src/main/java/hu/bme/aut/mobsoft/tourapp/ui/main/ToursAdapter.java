@@ -11,16 +11,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
+import hu.bme.aut.mobsoft.tourapp.utils.Constants;
 
 /**
  * Created by vcsontos on 2017. 05. 12..
  */
 
 public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHolder> {
+
+    private static final String TAG = Constants.LOG_PREFIX + ToursAdapter.class.getSimpleName();
 
     private List<Tour> tours;
     private Context context;
@@ -40,11 +45,37 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHo
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
         Tour tour = tours.get(i);
-        customViewHolder.tourName.setText(fromHtml(tour.getTourName()));
-        customViewHolder.startDate.setText(fromHtml(tour.getStartDate().toString()));
-        customViewHolder.difficulty.setText(fromHtml(tour.getDifficulty().toString()));
-        customViewHolder.category.setImageResource(0); // TODO select correct category image
-        customViewHolder.members.setText(fromHtml(tour.getMembers().size() + "people joined"));
+        if (tour != null) {
+            customViewHolder.tourName.setText(fromHtml(tour.getTourName()));
+            customViewHolder.startDate.setText(fromHtml(dateFormatter(tour.getStartDate())));
+            customViewHolder.difficulty.setText(fromHtml(tour.getDifficulty().toString().toLowerCase()));
+            if (tour.getMembers() != null) {
+                customViewHolder.members.setText(fromHtml(tour.getMembers().size() + "people joined"));
+            } else {
+                customViewHolder.members.setText(fromHtml("0 people joined"));
+            }
+            addCategoryImageToCVH(tour, customViewHolder);
+        }
+    }
+
+    private void addCategoryImageToCVH(Tour tour, CustomViewHolder customViewHolder) {
+
+        if (tour.getCategory() != null) {
+            switch (tour.getCategory()) {
+                case WALKING:
+                    customViewHolder.category.setImageResource(R.drawable.category_walking_tour);
+                    break;
+                case CYCLING:
+                    customViewHolder.category.setImageResource(R.drawable.category_cycling_tour);
+                    break;
+                case WATER:
+                    customViewHolder.category.setImageResource(R.drawable.category_water_tour);
+                    break;
+                case MOUNTAIN:
+                    customViewHolder.category.setImageResource(R.drawable.category_mountain_tour);
+                    break;
+            }
+        }
     }
 
     @Override
@@ -70,12 +101,11 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHo
 
         public CustomViewHolder(View view) {
             super(view);
-            // TODO findViewById from tour_item.xml
-            this.tourName = null;
-            this.startDate = null;
-            this.category = null;
-            this.difficulty = null;
-            this.members = null;
+            this.tourName = (TextView) view.findViewById(R.id.tour_name_tv);
+            this.startDate = (TextView) view.findViewById(R.id.tour_start_date_tv);
+            this.category = (ImageView) view.findViewById(R.id.tour_category_img);
+            this.difficulty = (TextView) view.findViewById(R.id.tour_difficulty_tv);
+            this.members = (TextView) view.findViewById(R.id.tour_members_tv);
         }
     }
 
@@ -86,5 +116,9 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHo
         } else {
             return Html.fromHtml(source);
         }
+    }
+
+    private String dateFormatter(Date originalDate) {
+        return new SimpleDateFormat("MMM dd, yyyy").format(originalDate);
     }
 }

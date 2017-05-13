@@ -2,11 +2,12 @@ package hu.bme.aut.mobsoft.tourapp.ui.login;
 
 import android.util.Log;
 
+import de.greenrobot.event.EventBus;
+
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
-import de.greenrobot.event.EventBus;
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginInteractor;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.events.LoginEvent;
@@ -46,12 +47,15 @@ public class LoginPresenter extends Presenter<LoginScreen> {
     }
 
     public void login(final String username, final String password) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                loginInteractor.login(username, password);
-            }
-        });
+        if (screen != null) {
+            screen.showProgressBar();
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    loginInteractor.login(username, password);
+                }
+            });
+        }
     }
 
     public void onEventMainThread(LoginEvent event) {
@@ -59,11 +63,13 @@ public class LoginPresenter extends Presenter<LoginScreen> {
         if (event.getThrowable() != null) {
             event.getThrowable().printStackTrace();
             if (screen != null) {
+                screen.hideProgressBar();
                 screen.showMessage(R.string.login_error);
             }
             Log.e(TAG, "Error during login", event.getThrowable());
         } else {
             if (screen != null) {
+                screen.hideProgressBar();
                 screen.navigateToHome();
             }
         }

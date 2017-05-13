@@ -63,6 +63,13 @@ dependencies {
     // Percent layout
     compile 'com.android.support:percent:25.3.0'
 
+    // MaterialNavigationDrawer
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+        transitive = true
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+
     // https://mvnrepository.com/artifact/io.swagger/swagger-annotations
     compile group: 'io.swagger', name: 'swagger-annotations', version: '1.5.13'
 

@@ -69,12 +69,12 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public List<Tour> getTours() {
+    public List<Tour> getTours(String toursSearchTerm) {
         return tours;
     }
 
     @Override
-    public List<Tour> getMyTours() {
+    public List<Tour> getMyTours(String toursSearchTerm) {
         return myTours;
     }
 

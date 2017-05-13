@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginInteractor;
 import hu.bme.aut.mobsoft.tourapp.interactor.tours.ToursInteractor;
+import hu.bme.aut.mobsoft.tourapp.navigation.NavigationModule;
 import hu.bme.aut.mobsoft.tourapp.network.NetworkModule;
 import hu.bme.aut.mobsoft.tourapp.repository.RepositoryModule;
 import hu.bme.aut.mobsoft.tourapp.interactor.InteractorModule;
@@ -25,7 +26,8 @@ import hu.bme.aut.mobsoft.tourapp.ui.new_tour.NewTourPresenter;
  */
 
 @Singleton
-@Component(modules = {UIModule.class, RepositoryModule.class, InteractorModule.class, NetworkModule.class})
+@Component(modules = {UIModule.class, RepositoryModule.class,
+        InteractorModule.class, NetworkModule.class, NavigationModule.class})
 public interface TourApplicationComponent {
 
     void inject(TourApplication tourApplication);

@@ -32,12 +32,12 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public List<Tour> getTours() {
+    public List<Tour> getTours(String toursSearchTerm) {
         return SugarRecord.listAll(Tour.class);
     }
 
     @Override
-    public List<Tour> getMyTours() {
+    public List<Tour> getMyTours(String toursSearchTerm) {
         // TODO implement
         return null;
     }

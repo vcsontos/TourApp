@@ -1,5 +1,8 @@
 package hu.bme.aut.mobsoft.tourapp.ui.main;
 
+import java.util.List;
+
+import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.ui.Screen;
 
 /**
@@ -8,5 +11,5 @@ import hu.bme.aut.mobsoft.tourapp.ui.Screen;
 
 public interface MainScreen extends Screen {
 
-    void showTours(String toursSearchTerm);
+    void showTours(List<Tour> tours);
 }
