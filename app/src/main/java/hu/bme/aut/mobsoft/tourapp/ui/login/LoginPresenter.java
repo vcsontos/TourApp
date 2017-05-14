@@ -71,8 +71,12 @@ public class LoginPresenter extends Presenter<LoginScreen> {
         } else {
             if (screen != null) {
                 screen.hideProgressBar();
-                Utils.setLoggedInUser(event.getUser());
-                screen.navigateToHome();
+                if (event.getCode() == 200) {
+                    Utils.setLoggedInUser(event.getUser());
+                    screen.navigateToHome();
+                } else if (event.getCode() == 404) {
+                    screen.showMessage(R.string.invalid_login_credentials);
+                }
             }
         }
     }

@@ -2,6 +2,9 @@ package hu.bme.aut.mobsoft.tourapp.utils;
 
 import com.orhanobut.hawk.Hawk;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import hu.bme.aut.mobsoft.tourapp.model.User;
 
 /**
@@ -24,5 +27,12 @@ public class Utils {
 
     public static void deleteSessionData() {
         Hawk.delete(Constants.LOGGED_IN_USER);
+    }
+
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }

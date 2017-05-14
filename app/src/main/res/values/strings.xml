@@ -55,6 +55,8 @@
 
     <string name="create_tour_error">Sorry, an error occurred during create tour. Please try again!</string>
     <string name="successful_create_tour">Yeah! You have successfully created the tour. </string>
+    <string name="invalid_login_credentials">Invalid credentials</string>
+    <string name="get_tour_details_error">Sorry, an error occurred during get tour details. Please try again!</string>
 
 
 </resources>

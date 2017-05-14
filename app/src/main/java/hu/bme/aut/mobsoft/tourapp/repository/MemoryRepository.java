@@ -3,7 +3,6 @@ package hu.bme.aut.mobsoft.tourapp.repository;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -15,6 +14,8 @@ import hu.bme.aut.mobsoft.tourapp.model.Gender;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.model.User;
 import hu.bme.aut.mobsoft.tourapp.utils.Utils;
+
+import static hu.bme.aut.mobsoft.tourapp.utils.Utils.addDays;
 
 /**
  * Created by mobsoft on 2017. 04. 10..
@@ -65,7 +66,7 @@ public class MemoryRepository implements Repository {
         User user = new User(UUID.randomUUID().toString(), username);
         user.setAge(20);
         user.setAuthToken("1234567");
-        user.setExpiredDate(addDays(new Date(), 10));
+        user.setExpiredDate(Utils.addDays(new Date(), 10));
         user.setExperience(Experience.ADVANCED);
         user.setGender(Gender.MALE);
         user.setMyTours(myTours);
@@ -76,6 +77,16 @@ public class MemoryRepository implements Repository {
     @Override
     public List<Tour> getTours() {
         return tours;
+    }
+
+    @Override
+    public Tour getTour(String tourId) {
+        for (Tour tour : tours) {
+            if (tour.getTourId().equals(tourId)) {
+                return tour;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -127,12 +138,5 @@ public class MemoryRepository implements Repository {
         tour.setTourLeader(tourLeader);
         tour.setMembers(members);
         return tour;
-    }
-
-    private static Date addDays(Date date, int days) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
-        return cal.getTime();
     }
 }

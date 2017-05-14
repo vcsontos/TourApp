@@ -1,8 +1,9 @@
 package hu.bme.aut.mobsoft.tourapp.interactor.login;
 
+import de.greenrobot.event.EventBus;
+
 import javax.inject.Inject;
 
-import de.greenrobot.event.EventBus;
 import hu.bme.aut.mobsoft.tourapp.TourApplication;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.events.LoginEvent;
 import hu.bme.aut.mobsoft.tourapp.model.User;
@@ -28,7 +29,12 @@ public class LoginInteractor {
         LoginEvent event = new LoginEvent();
         try {
             User user = repository.getUser(username, password);
-            event.setUser(user);
+            if (user == null) {
+                event.setCode(404);
+            } else {
+                event.setCode(200);
+                event.setUser(user);
+            }
             bus.post(event);
         } catch (Exception e) {
             event.setThrowable(e);

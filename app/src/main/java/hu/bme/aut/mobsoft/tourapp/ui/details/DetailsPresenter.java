@@ -12,6 +12,7 @@ import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.interactor.tours.ToursInteractor;
 import hu.bme.aut.mobsoft.tourapp.interactor.tours.events.Status;
 import hu.bme.aut.mobsoft.tourapp.interactor.tours.events.TourConnectionEvent;
+import hu.bme.aut.mobsoft.tourapp.interactor.tours.events.TourEvent;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
@@ -51,6 +52,17 @@ public class DetailsPresenter extends Presenter<DetailsScreen> {
         super.detachScreen();
     }
 
+    public void getTour(final String tourId) {
+        if (screen != null) {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    toursInteractor.getTour(tourId);
+                }
+            });
+        }
+    }
+
     public void connectTour(final Tour tour) {
         if (screen != null) {
             executor.execute(new Runnable() {
@@ -70,6 +82,21 @@ public class DetailsPresenter extends Presenter<DetailsScreen> {
                     toursInteractor.disconnectTour(tour);
                 }
             });
+        }
+    }
+
+    public void onEventMainThread(TourEvent event) {
+        Log.d(TAG, "LoginEvent start...");
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+            if (screen != null) {
+                screen.showMessage(R.string.get_tour_details_error);
+            }
+            Log.e(TAG, "Error during get tour details", event.getThrowable());
+        } else {
+            if (screen != null) {
+                screen.loadTourDetails(event.getTour());
+            }
         }
     }
 

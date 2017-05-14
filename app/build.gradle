@@ -43,7 +43,7 @@ dependencies {
     // Required for @Generated annotation (missing in Java <= 1.6; therefore, Android)
     provided 'javax.annotation:jsr250-api:1.0'
 
-    compile 'com.github.satyan:sugar:1.4'
+    compile 'com.github.satyan:sugar:1.5'
     compile 'de.greenrobot:eventbus:2.4.0'
 
     //Retrofit and OkHttp

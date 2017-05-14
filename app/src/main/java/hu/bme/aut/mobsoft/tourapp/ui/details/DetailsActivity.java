@@ -114,38 +114,47 @@ public class DetailsActivity extends AppCompatActivity implements DetailsScreen,
             drawerManager.getDrawer().closeDrawer();
         }
 
-        loadDetailsData();
+        Intent intent = getIntent();
+        String tourId = (String) intent.getExtras().get(Constants.TOUR_INTENT);
+
+        detailsPresenter.getTour(tourId);
     }
 
-    private void loadDetailsData() {
-        Intent intent = getIntent();
-        tour = (Tour) intent.getExtras().getSerializable(Constants.TOUR_INTENT);
+    @Override
+    public void loadTourDetails(Tour tour) {
 
-        if (tour.getImageUrl() != null) {
-            int resId = getResources().getIdentifier(tour.getImageUrl(), "drawable", getPackageName());
-            if (resId != 0) {
-                photo.setImageResource(resId);
+        this.tour = tour;
+
+        if (tour != null) {
+
+            if (tour.getImageUrl() != null) {
+                int resId = getResources().getIdentifier(tour.getImageUrl(), "drawable", getPackageName());
+                if (resId != 0) {
+                    photo.setImageResource(resId);
+                } else {
+                    photo.setImageResource(R.drawable.no_image);
+                }
             } else {
                 photo.setImageResource(R.drawable.no_image);
             }
-        }
 
-        if (tour.getTourName() != null) {
-            tourName.setText(tour.getTourName());
-        }
-        tourStartDate.setText(StringUtil.dateFormatter(tour.getStartDate()));
-        if (tour.getDistance() != null) {
-            distance.setText(tour.getDistance().toString());
-        }
-        if (tour.getTourLeader() != null && tour.getTourLeader().getPersonName() != null) {
-            organizer.setText(tour.getTourLeader().getPersonName());
-        }
-        difficulty.setText(tour.getDifficulty().toString().toLowerCase());
-        category.setText(tour.getCategory().toString().toLowerCase());
-        if (tour.getMembers() != null) {
-            membersNumber.setText(String.valueOf(tour.getMembers().size()));
-        } else {
-            membersNumber.setText("0");
+            if (tour.getTourName() != null) {
+                tourName.setText(tour.getTourName());
+            }
+            tourStartDate.setText(StringUtil.dateFormatter(tour.getStartDate()));
+            if (tour.getDistance() != null) {
+                distance.setText(tour.getDistance().toString());
+            }
+            if (tour.getTourLeader() != null && tour.getTourLeader().getPersonName() != null) {
+                organizer.setText(tour.getTourLeader().getPersonName());
+            }
+            difficulty.setText(tour.getDifficulty().toString().toLowerCase());
+            category.setText(tour.getCategory().toString().toLowerCase());
+            if (tour.getMembers() != null) {
+                membersNumber.setText(String.valueOf(tour.getMembers().size()));
+            } else {
+                membersNumber.setText("0");
+            }
         }
     }
 
@@ -184,7 +193,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsScreen,
             return false;
         } else {
             for (User member : tour.getMembers()) {
-                if (Utils.getLoggedInUser().equals(member)) {
+                if (Utils.getLoggedInUser().getPersonId().equals(member.getPersonId())) {
                     return true;
                 }
             }

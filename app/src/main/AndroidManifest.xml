@@ -3,6 +3,7 @@
     package="hu.bme.aut.mobsoft.tourapp">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".TourApplication"
@@ -12,6 +13,20 @@
         android:supportsRtl="true"
         android:fullBackupContent="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+                android:name="DATABASE"
+                android:value="tourapp.db"/>
+        <meta-data
+                android:name="VERSION"
+                android:value="2"/>
+        <meta-data
+                android:name="QUERY_LOG"
+                android:value="true"/>
+        <meta-data
+                android:name="DOMAIN_PACKAGE_NAME"
+                android:value="hu.bme.aut.mobsoft.tourapp.model"/>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTop" >

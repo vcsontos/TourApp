@@ -71,17 +71,17 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+        TourApplication.injector.inject(this);
+        ButterKnife.bind(this);
+        setToolBar();
+        initNavigationDrawer(savedInstanceState);
         Hawk.init(this).build();
         if (!Utils.isUserLoggedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
             return;
         }
 
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-        TourApplication.injector.inject(this);
-        setToolBar();
-        initNavigationDrawer(savedInstanceState);
         setToursRecyclerView();
     }
 
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
 
     private void navigateToTourDetails(Tour selectedTour) {
         Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra(Constants.TOUR_INTENT, (Serializable)selectedTour);
+        intent.putExtra(Constants.TOUR_INTENT, selectedTour.getTourId());
         startActivity(intent);
     }
 

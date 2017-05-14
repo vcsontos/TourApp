@@ -21,6 +21,8 @@ public interface Repository {
 
     List<Tour> getTours();
 
+    Tour getTour(String tourId);
+
     List<Tour> getMyTours();
 
     void saveTour(Tour tour);

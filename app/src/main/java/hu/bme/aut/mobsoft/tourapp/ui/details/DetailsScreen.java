@@ -1,6 +1,7 @@
 package hu.bme.aut.mobsoft.tourapp.ui.details;
 
 import hu.bme.aut.mobsoft.tourapp.interactor.tours.events.Status;
+import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.ui.Screen;
 
 /**
@@ -8,6 +9,8 @@ import hu.bme.aut.mobsoft.tourapp.ui.Screen;
  */
 
 public interface DetailsScreen extends Screen {
+
+    void loadTourDetails(Tour tour);
 
     void refreshTourMembers(int value);
 

@@ -2,7 +2,9 @@ package hu.bme.aut.mobsoft.tourapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import com.orm.dsl.Ignore;
+import com.orm.dsl.Table;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,9 +12,9 @@ import java.util.List;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-
+@Table(name = "Tour")
 @ApiModel(description = "")
-public class Tour implements Serializable {
+public class Tour {
 
     @SerializedName("tour_id")
     private String tourId = null;
@@ -44,8 +46,15 @@ public class Tour implements Serializable {
     @SerializedName("tour_leader")
     private User tourLeader = null;
 
+    @Ignore
     @SerializedName("members")
     private List<User> members = new ArrayList<User>();
+
+    @SerializedName("members_str")
+    private String membersStr;
+
+    public Tour() {
+    }
 
     public Tour(String tourId, String tourName) {
         this.tourId = tourId;
@@ -192,6 +201,13 @@ public class Tour implements Serializable {
         this.members = members;
     }
 
+    public String getMembersStr() {
+        return membersStr;
+    }
+
+    public void setMembersStr(String membersStr) {
+        this.membersStr = membersStr;
+    }
 
     @Override
     public boolean equals(Object o) {

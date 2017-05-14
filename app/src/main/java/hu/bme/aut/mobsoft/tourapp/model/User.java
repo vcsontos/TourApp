@@ -2,7 +2,9 @@ package hu.bme.aut.mobsoft.tourapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import com.orm.dsl.Column;
+import com.orm.dsl.Table;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,13 +12,15 @@ import java.util.List;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-
+@Table(name = "User")
 @ApiModel(description = "")
-public class User implements Serializable {
+public class User {
 
+    @Column(name = "person_id", unique = true, notNull = true)
     @SerializedName("person_id")
     private String personId = null;
 
+    @Column(name = "person_name", unique = true, notNull = true)
     @SerializedName("person_name")
     private String personName = null;
 
@@ -40,6 +44,9 @@ public class User implements Serializable {
 
     @SerializedName("my_tours")
     private List<Tour> myTours = new ArrayList<Tour>();
+
+    public User() {
+    }
 
     public User(String personId, String personName) {
         this.personId = personId;
