@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.tourapp.R;
+import hu.bme.aut.mobsoft.tourapp.ui.login.LoginActivity;
 import hu.bme.aut.mobsoft.tourapp.ui.main.MainActivity;
+import hu.bme.aut.mobsoft.tourapp.ui.my_tours.MyToursActivity;
 
 /**
  * Created by valentin on 2017. 05. 13..
@@ -84,12 +86,12 @@ public class DrawerManager {
                 .withSelectedTextColorRes(R.color.colorPrimary)
                 .withSelectedIconColorRes(R.color.colorPrimary));
 
-        items.add(new PrimaryDrawerItem().withName(R.string.nav_my_tours)
+        items.add(new PrimaryDrawerItem().withName(R.string.nav_my_tours).withIcon(R.drawable.ic_nav_my_tours)
                 .withIdentifier(2)
                 .withSelectedTextColorRes(R.color.colorPrimary)
                 .withSelectedIconColorRes(R.color.colorPrimary));
 
-        items.add(new PrimaryDrawerItem().withName(R.string.nav_logout).withIcon(R.drawable.ic_nav_logout_24dp)
+        items.add(new PrimaryDrawerItem().withName(R.string.nav_logout).withIcon(R.drawable.ic_nav_logout)
                 .withIdentifier(3)
                 .withSelectedTextColorRes(R.color.colorPrimary)
                 .withSelectedIconColorRes(R.color.colorPrimary));
@@ -137,11 +139,14 @@ public class DrawerManager {
     }
 
     private void startMyTours(Activity activity) {
-
+        Intent intent = new Intent(activity, MyToursActivity.class);
+        activity.startActivity(intent);
     }
 
     private void startLogout(Activity activity) {
-
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+        // TODO delete loggedInUser
     }
 
     public void setLastSelectedDrawerItem(Activity activity) {

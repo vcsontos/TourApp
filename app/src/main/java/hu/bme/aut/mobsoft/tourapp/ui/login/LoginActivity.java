@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.gc.materialdesign.views.Button;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 
 import javax.inject.Inject;
@@ -37,9 +36,6 @@ public class LoginActivity extends AppCompatActivity implements LoginScreen {
 
     @BindView(R.id.passwordLoginEditText)
     EditText passwordEditText;
-
-    @BindView(R.id.loginBtn)
-    Button loginBtn;
 
     @BindView(R.id.loginProgressBar)
     ProgressBarCircularIndeterminate progressBar;

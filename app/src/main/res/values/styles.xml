@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/BlackDrawerIconStyle</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
     </style>
 
     <style name="BlackDrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
@@ -17,6 +18,10 @@
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/full_white</item>
+    </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+
     </style>
 
 </resources>

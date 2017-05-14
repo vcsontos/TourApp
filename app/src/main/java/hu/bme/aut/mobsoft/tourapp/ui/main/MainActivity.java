@@ -21,21 +21,24 @@ import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.TourApplication;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.navigation.DrawerManager;
 import hu.bme.aut.mobsoft.tourapp.ui.details.DetailsActivity;
+import hu.bme.aut.mobsoft.tourapp.ui.new_tour.NewTourActivity;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements MainScreen,
-        Drawer.OnDrawerItemClickListener {
+        Drawer.OnDrawerItemClickListener, SearchView.OnQueryTextListener {
 
     private static final String TAG = Constants.LOG_PREFIX + MainActivity.class.getSimpleName();
 
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     MainPresenter mainPresenter;
 
     private ToursAdapter toursAdapter;
+    private List<Tour> tours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +94,6 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
         toursRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         toursRecyclerView.addItemDecoration(new DividerItemDecoration(
                 this, LinearLayoutManager.VERTICAL));
-        /*toursAdapter = new ToursAdapter(this, null);
-        toursRecyclerView.setAdapter(toursAdapter);*/
         toursRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
                 this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -111,7 +113,10 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     protected void onStart() {
         super.onStart();
         mainPresenter.attachScreen(this);
-        mainPresenter.getTours("");  // TODO search
+        if (drawerManager.isDrawerOpen()) {
+            drawerManager.getDrawer().closeDrawer();
+        }
+        mainPresenter.getTours();
     }
 
     @Override
@@ -123,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     @Override
     public void showTours(List<Tour> tours) {
         Log.d(TAG, "showTours called");
+        this.tours = tours;
         toursAdapter = new ToursAdapter(this, tours);
         toursRecyclerView.setAdapter(toursAdapter);
     }
@@ -157,28 +163,12 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
         SearchView searchView = null;
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
+            searchView.setOnQueryTextListener(this);
         }
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-
-        switch (itemId) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-            case R.id.action_search:
-                // TODO search
-                break;
-            default:
-                super.onOptionsItemSelected(item);
-        }
-        return true;
     }
 
     @Override
@@ -189,6 +179,12 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
         }
 
         return isHandled;
+    }
+
+    @OnClick(R.id.fab)
+    public void clickCreateTourBtn() {
+        Intent intent = new Intent(this, NewTourActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -205,5 +201,29 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
         if (drawerManager != null) {
             drawerManager.setLastSelectedDrawerItem(this);
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String toursSearchTerm) {
+        final List<Tour> filteredTours = filter(tours, toursSearchTerm);
+        toursAdapter.setFilter(filteredTours);
+        return true;
+    }
+
+    private List<Tour> filter(List<Tour> tours, String query) {
+        query = query.toLowerCase();
+        final List<Tour> filteredTours = new ArrayList<>();
+        for (Tour tour : tours) {
+            final String text = tour.getTourName().toLowerCase();
+            if (text.contains(query)) {
+                filteredTours.add(tour);
+            }
+        }
+        return filteredTours;
     }
 }

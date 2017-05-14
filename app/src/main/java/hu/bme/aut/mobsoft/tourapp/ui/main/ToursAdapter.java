@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -89,6 +90,12 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHo
         } else {
             return tours.get(position);
         }
+    }
+
+    public void setFilter(List<Tour> filteredTours) {
+        tours = new ArrayList<>();
+        tours.addAll(filteredTours);
+        notifyDataSetChanged();
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {

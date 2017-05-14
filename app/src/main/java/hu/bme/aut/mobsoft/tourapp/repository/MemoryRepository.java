@@ -39,12 +39,16 @@ public class MemoryRepository implements Repository {
         Tour tour3 = createTour("3L", "Balaton-round", Category.CYCLING, Difficulty.MEDIUM,
                 addDays(new Date(), 15), 200.0, "", "", "", tourLeader, null);
 
+        Tour tour4 = createTour("3L", "Bukk tour", Category.MOUNTAIN, Difficulty.MEDIUM,
+                addDays(new Date(), 15), 20.0, "", "", "", tourLeader, null);
+
         tours = new ArrayList<>();
         tours.add(tour1);
         tours.add(tour2);
         tours.add(tour3);
+        tours.add(tour4);
 
-        List<Tour> myTours = new ArrayList<>();
+        myTours = new ArrayList<>();
         myTours.add(tour1);
         myTours.add(tour3);
     }
@@ -69,12 +73,12 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public List<Tour> getTours(String toursSearchTerm) {
+    public List<Tour> getTours() {
         return tours;
     }
 
     @Override
-    public List<Tour> getMyTours(String toursSearchTerm) {
+    public List<Tour> getMyTours() {
         return myTours;
     }
 

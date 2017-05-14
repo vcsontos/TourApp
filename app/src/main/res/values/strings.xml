@@ -15,4 +15,7 @@
     <string name="nav_logout">Logout</string>
 
     <string name="get_tours_error">Sorry, an error occurred during get tours. Please try again!</string>
+    <string name="toolbar_title_tour_details">Tour details</string>
+    <string name="toolbar_title_my_tours">My tours</string>
+    <string name="toolbar_title_new_tour">New tour</string>
 </resources>

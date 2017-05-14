@@ -49,13 +49,13 @@ public class MainPresenter extends Presenter<MainScreen> {
         super.detachScreen();
     }
 
-    public void getTours(final String toursSearchTerm) {
+    public void getTours() {
         if (screen != null) {
             screen.showProgressBar();
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    toursInteractor.getTours(toursSearchTerm);
+                    toursInteractor.getTours();
                 }
             });
         }

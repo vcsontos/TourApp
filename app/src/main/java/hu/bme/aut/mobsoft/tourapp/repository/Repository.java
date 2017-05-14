@@ -19,9 +19,9 @@ public interface Repository {
 
     User getUser(String username, String password);
 
-    List<Tour> getTours(String toursSearchTerm);
+    List<Tour> getTours();
 
-    List<Tour> getMyTours(String toursSearchTerm);
+    List<Tour> getMyTours();
 
     void saveTour(Tour tour);
 

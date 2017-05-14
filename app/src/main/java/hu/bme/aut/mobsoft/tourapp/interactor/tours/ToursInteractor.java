@@ -27,10 +27,10 @@ public class ToursInteractor {
         TourApplication.injector.inject(this);
     }
 
-    public void getTours(String toursSearchTerm) {
+    public void getTours() {
         ToursEvent event = new ToursEvent();
         try {
-            List<Tour> tours = repository.getTours(toursSearchTerm);
+            List<Tour> tours = repository.getTours();
             event.setTours(tours);
             bus.post(event);
         } catch (Exception e) {
