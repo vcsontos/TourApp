@@ -2,6 +2,7 @@ package hu.bme.aut.mobsoft.tourapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 
 @ApiModel(description = "")
-public class Tour {
+public class Tour implements Serializable {
 
     @SerializedName("tour_id")
     private String tourId = null;

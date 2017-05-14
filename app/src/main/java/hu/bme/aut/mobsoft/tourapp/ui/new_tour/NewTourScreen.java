@@ -8,5 +8,5 @@ import hu.bme.aut.mobsoft.tourapp.ui.Screen;
 
 public interface NewTourScreen extends Screen {
 
-    void showTours(String toursSearchTerm);
+    void navigateToHome();
 }

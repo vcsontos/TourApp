@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import hu.bme.aut.mobsoft.tourapp.model.Category;
 import hu.bme.aut.mobsoft.tourapp.model.Difficulty;
@@ -13,6 +14,7 @@ import hu.bme.aut.mobsoft.tourapp.model.Experience;
 import hu.bme.aut.mobsoft.tourapp.model.Gender;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.model.User;
+import hu.bme.aut.mobsoft.tourapp.utils.Utils;
 
 /**
  * Created by mobsoft on 2017. 04. 10..
@@ -22,7 +24,6 @@ public class MemoryRepository implements Repository {
 
     private static List<Tour> tours;
     private static List<Tour> myTours;
-    private static User loggedInUser;
 
     @Override
     public void open(Context context) {
@@ -31,13 +32,13 @@ public class MemoryRepository implements Repository {
         tourLeader.setAge(40);
 
         Tour tour1 = createTour("1L", "Nagy-Kevely", Category.WALKING, Difficulty.EASY,
-                addDays(new Date(), 1), 5.0, "", "", "", tourLeader, null);
+                addDays(new Date(), 1), 5.0, "", "nagy_kevely", "", tourLeader, null);
 
         Tour tour2 = createTour("2L", "Cserna rafting tour", Category.WATER, Difficulty.HARD,
                 addDays(new Date(), 10), 50.0, "", "", "", tourLeader, null);
 
         Tour tour3 = createTour("3L", "Balaton-round", Category.CYCLING, Difficulty.MEDIUM,
-                addDays(new Date(), 15), 200.0, "", "", "", tourLeader, null);
+                addDays(new Date(), 15), 200.0, "", "balaton_round", "", tourLeader, null);
 
         Tour tour4 = createTour("3L", "Bukk tour", Category.MOUNTAIN, Difficulty.MEDIUM,
                 addDays(new Date(), 15), 20.0, "", "", "", tourLeader, null);
@@ -61,15 +62,15 @@ public class MemoryRepository implements Repository {
     @Override
     public User getUser(String username, String password) {
 
-        loggedInUser = new User("2L", username);
-        loggedInUser.setAge(20);
-        loggedInUser.setAuthToken("1234567");
-        loggedInUser.setExpiredDate(addDays(new Date(), 10));
-        loggedInUser.setExperience(Experience.ADVANCED);
-        loggedInUser.setGender(Gender.MALE);
-        loggedInUser.setMyTours(myTours);
+        User user = new User(UUID.randomUUID().toString(), username);
+        user.setAge(20);
+        user.setAuthToken("1234567");
+        user.setExpiredDate(addDays(new Date(), 10));
+        user.setExperience(Experience.ADVANCED);
+        user.setGender(Gender.MALE);
+        user.setMyTours(myTours);
 
-        return loggedInUser;
+        return user;
     }
 
     @Override
@@ -93,13 +94,18 @@ public class MemoryRepository implements Repository {
     }
 
     @Override
-    public void connectTour(Tour tour) {
-        tour.getMembers().add(loggedInUser);
+    public int connectTour(Tour tour) {
+        if (tour.getMembers() == null) {
+            tour.setMembers(new ArrayList<User>());
+        }
+        tour.getMembers().add(Utils.getLoggedInUser());
+        return tour.getMembers().size();
     }
 
     @Override
-    public void disconnectTour(Tour tour) {
-        tour.getMembers().remove(loggedInUser);
+    public int disconnectTour(Tour tour) {
+        tour.getMembers().remove(Utils.getLoggedInUser());
+        return tour.getMembers().size();
     }
 
     @Override

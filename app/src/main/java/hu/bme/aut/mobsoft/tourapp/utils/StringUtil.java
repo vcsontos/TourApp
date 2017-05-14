@@ -1,5 +1,8 @@
 package hu.bme.aut.mobsoft.tourapp.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-04-24T09:37:33.583+02:00")
 public class StringUtil {
   /**
@@ -38,5 +41,9 @@ public class StringUtil {
       out.append(separator).append(array[i]);
     }
     return out.toString();
+  }
+
+  public static String dateFormatter(Date originalDate) {
+    return new SimpleDateFormat("MMM dd, yyyy").format(originalDate);
   }
 }

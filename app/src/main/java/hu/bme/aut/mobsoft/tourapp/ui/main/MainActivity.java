@@ -20,7 +20,9 @@ import android.widget.Toast;
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.orhanobut.hawk.Hawk;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +36,13 @@ import hu.bme.aut.mobsoft.tourapp.TourApplication;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.navigation.DrawerManager;
 import hu.bme.aut.mobsoft.tourapp.ui.details.DetailsActivity;
+import hu.bme.aut.mobsoft.tourapp.ui.login.LoginActivity;
 import hu.bme.aut.mobsoft.tourapp.ui.new_tour.NewTourActivity;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
+import hu.bme.aut.mobsoft.tourapp.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements MainScreen,
-        Drawer.OnDrawerItemClickListener, SearchView.OnQueryTextListener {
+        Drawer.OnDrawerItemClickListener, SearchView.OnQueryTextListener, Serializable {
 
     private static final String TAG = Constants.LOG_PREFIX + MainActivity.class.getSimpleName();
 
@@ -66,8 +70,14 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        Hawk.init(this).build();
+        if (!Utils.isUserLoggedIn()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            return;
+        }
+
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         TourApplication.injector.inject(this);
         setToolBar();
@@ -98,14 +108,15 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
                 this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Tour tour = toursAdapter.getItem(position);
-                navigateToTourDetails();
+                Tour selectedTour = toursAdapter.getItem(position);
+                navigateToTourDetails(selectedTour);
             }
         }));
     }
 
-    private void navigateToTourDetails() {
+    private void navigateToTourDetails(Tour selectedTour) {
         Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(Constants.TOUR_INTENT, (Serializable)selectedTour);
         startActivity(intent);
     }
 

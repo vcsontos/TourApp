@@ -27,9 +27,9 @@ public interface Repository {
 
     void removeTour(Tour tour);
 
-    void connectTour(Tour tour);
+    int connectTour(Tour tour);
 
-    void disconnectTour(Tour tour);
+    int disconnectTour(Tour tour);
 
     boolean isInDB(Tour tour);
 }

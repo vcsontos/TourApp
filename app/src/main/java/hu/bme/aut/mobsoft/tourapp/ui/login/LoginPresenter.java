@@ -13,6 +13,7 @@ import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginInteractor;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.events.LoginEvent;
 import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
+import hu.bme.aut.mobsoft.tourapp.utils.Utils;
 
 import static hu.bme.aut.mobsoft.tourapp.TourApplication.injector;
 
@@ -70,6 +71,7 @@ public class LoginPresenter extends Presenter<LoginScreen> {
         } else {
             if (screen != null) {
                 screen.hideProgressBar();
+                Utils.setLoggedInUser(event.getUser());
                 screen.navigateToHome();
             }
         }

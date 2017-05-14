@@ -15,7 +15,46 @@
     <string name="nav_logout">Logout</string>
 
     <string name="get_tours_error">Sorry, an error occurred during get tours. Please try again!</string>
-    <string name="toolbar_title_tour_details">Tour details</string>
-    <string name="toolbar_title_my_tours">My tours</string>
-    <string name="toolbar_title_new_tour">New tour</string>
+    <string name="toolbar_title_tour_details">Details</string>
+    <string name="toolbar_title_my_tours">My Tours</string>
+    <string name="toolbar_title_new_tour">New Tour</string>
+    <string name="tour_details_difficulty">Difficulty:</string>
+    <string name="tour_details_organizer">Organizer:</string>
+    <string name="tour_details_distance">Distance:</string>
+    <string name="tour_details_category">Category:</string>
+    <string name="tour_details_people_joined">people joined</string>
+    <string name="tour_details_connect">Connect</string>
+    <string name="tour_details_disconnect">Disconnect</string>
+    <string name="get_tour_connection_error">Sorry, an error occurred during connecting tour. Please try again!</string>
+    <string name="get_tour_disconnection_error">Sorry, an error occurred during disconnecting tour. Please try again!</string>
+    <string name="load_photo">Load Photo</string>
+
+    <string-array name="difficulties">
+        <item>easy</item>
+        <item>medium</item>
+        <item>hard</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>walking</item>
+        <item>cycling</item>
+        <item>water</item>
+        <item>mountain</item>
+    </string-array>
+
+    <string name="difficulty_prompt">Choose a difficulty</string>
+    <string name="category_prompt">Choose a category</string>
+    <string name="create_tour_name">Tour name</string>
+    <string name="create_set_date">Set date</string>
+    <string name="create_location">Location</string>
+    <string name="create_distance_hint">Distance</string>
+    <string name="create_km">km</string>
+    <string name="create_difficulty">Difficulty:</string>
+    <string name="create_category">Category:</string>
+    <string name="create_tour_save">Save</string>
+
+    <string name="create_tour_error">Sorry, an error occurred during create tour. Please try again!</string>
+    <string name="successful_create_tour">Yeah! You have successfully created the tour. </string>
+
+
 </resources>

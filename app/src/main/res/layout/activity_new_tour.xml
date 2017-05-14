@@ -8,4 +8,191 @@
             android:id="@+id/tool_bar"
             layout="@layout/tool_bar"/>
 
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:paddingTop="15dp"
+                  android:paddingLeft="16dp"
+                  android:paddingRight="16dp">
+
+        <Button
+                android:id="@+id/buttonLoadPicture"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/load_photo"
+                android:textSize="18sp"
+                android:textColor="@color/full_white"
+                android:background="@drawable/rounded_clickable_btn"
+                android:layout_gravity="center"/>
+
+        <ImageView
+                android:id="@+id/tourPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/no_image_available"
+                android:layout_gravity="center"
+                android:contentDescription="@null"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:background="@color/colorPrimaryDark"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"/>
+
+    <EditText
+            android:id="@+id/tour_name_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:singleLine="true"
+            android:hint="@string/create_tour_name"
+            android:nextFocusDown="@+id/tour_location_et"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="10dp"
+                  android:paddingLeft="20dp"
+                  android:paddingRight="20dp">
+
+        <Button
+                android:id="@+id/set_date_btn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/create_set_date"
+                android:textSize="18sp"
+                android:textColor="@color/full_white"
+                android:background="@drawable/rounded_clickable_btn"
+                android:layout_gravity="center"/>
+
+        <TextView
+                android:id="@+id/tour_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="18sp"
+                android:text="2017.05.21"/>
+
+    </LinearLayout>
+
+    <EditText
+            android:id="@+id/tour_location_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/create_location"
+            android:singleLine="true"
+            android:nextFocusDown="@+id/tour_distance_et"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+
+        <EditText
+                android:id="@+id/tour_distance_et"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:inputType="number"
+                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
+                android:singleLine="true"
+                android:hint="@string/create_distance_hint"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="3dp"
+                android:textSize="18sp"
+                android:text="@string/create_km"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:paddingTop="15dp"
+                  android:paddingLeft="20dp"
+                  android:paddingRight="20dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="3dp"
+                android:textSize="18sp"
+                android:text="@string/create_difficulty"/>
+
+        <Spinner
+                android:id="@+id/difficulty_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/difficulties"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="-5dp"
+                android:gravity="center"
+                android:prompt="@string/difficulty_prompt"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:paddingTop="15dp"
+                  android:paddingLeft="20dp"
+                  android:paddingRight="20dp">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="3dp"
+                android:textSize="18sp"
+                android:text="@string/create_category"/>
+
+        <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/categories"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="-5dp"
+                android:gravity="center"
+                android:prompt="@string/difficulty_prompt"/>
+
+    </LinearLayout>
+
+    <Button android:id="@+id/new_tour_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/create_tour_save"
+            android:textSize="18sp"
+            android:textColor="@color/full_white"
+            android:background="@drawable/rounded_clickable_btn"/>
+
 </LinearLayout>

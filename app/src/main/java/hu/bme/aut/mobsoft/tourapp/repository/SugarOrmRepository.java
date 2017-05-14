@@ -53,21 +53,23 @@ public class SugarOrmRepository implements Repository {
     }
 
     @Override
-    public void connectTour(Tour tour) {
+    public int connectTour(Tour tour) {
         Tour result = SugarRecord.findById(Tour.class, Long.valueOf(tour.getTourId()));
         if (result != null) {
             result.getMembers().add(null);  // TODO get loggedInPerson
             SugarRecord.saveInTx(result);
         }
+        return result.getMembers().size();
     }
 
     @Override
-    public void disconnectTour(Tour tour) {
+    public int disconnectTour(Tour tour) {
         Tour result = SugarRecord.findById(Tour.class, Long.valueOf(tour.getTourId()));
         if (result != null) {
             result.getMembers().remove(null); // TODO get loggedInPerson
             SugarRecord.saveInTx(result);
         }
+        return result.getMembers().size();
     }
 
     @Override

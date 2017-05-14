@@ -11,14 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
+import hu.bme.aut.mobsoft.tourapp.utils.StringUtil;
 
 /**
  * Created by vcsontos on 2017. 05. 12..
@@ -48,12 +47,12 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHo
         Tour tour = tours.get(i);
         if (tour != null) {
             customViewHolder.tourName.setText(fromHtml(tour.getTourName()));
-            customViewHolder.startDate.setText(fromHtml(dateFormatter(tour.getStartDate())));
+            customViewHolder.startDate.setText(fromHtml(StringUtil.dateFormatter(tour.getStartDate())));
             customViewHolder.difficulty.setText(fromHtml(tour.getDifficulty().toString().toLowerCase()));
             if (tour.getMembers() != null) {
-                customViewHolder.members.setText(fromHtml(tour.getMembers().size() + "people joined"));
+                customViewHolder.members.setText(fromHtml(String.valueOf(tour.getMembers().size())));
             } else {
-                customViewHolder.members.setText(fromHtml("0 people joined"));
+                customViewHolder.members.setText(fromHtml("0"));
             }
             addCategoryImageToCVH(tour, customViewHolder);
         }
@@ -123,9 +122,5 @@ public class ToursAdapter extends RecyclerView.Adapter<ToursAdapter.CustomViewHo
         } else {
             return Html.fromHtml(source);
         }
-    }
-
-    private String dateFormatter(Date originalDate) {
-        return new SimpleDateFormat("MMM dd, yyyy").format(originalDate);
     }
 }

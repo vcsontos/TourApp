@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.orhanobut.hawk.Hawk;
 
 import javax.inject.Inject;
 
@@ -45,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements LoginScreen {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Hawk.init(this).build();
         ButterKnife.bind(this);
         TourApplication.injector.inject(this);
     }

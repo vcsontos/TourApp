@@ -63,6 +63,9 @@ dependencies {
     // Percent layout
     compile 'com.android.support:percent:25.3.0'
 
+    // Hawk
+    compile 'com.orhanobut:hawk:2.0.1'
+
     // MaterialNavigationDrawer
     compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true

@@ -25,6 +25,7 @@ import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.ui.login.LoginActivity;
 import hu.bme.aut.mobsoft.tourapp.ui.main.MainActivity;
 import hu.bme.aut.mobsoft.tourapp.ui.my_tours.MyToursActivity;
+import hu.bme.aut.mobsoft.tourapp.utils.Utils;
 
 /**
  * Created by valentin on 2017. 05. 13..
@@ -144,9 +145,9 @@ public class DrawerManager {
     }
 
     private void startLogout(Activity activity) {
+        Utils.deleteSessionData();
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
-        // TODO delete loggedInUser
     }
 
     public void setLastSelectedDrawerItem(Activity activity) {

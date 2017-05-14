@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.orhanobut.hawk.Hawk;
 
 import javax.inject.Inject;
 
@@ -45,6 +46,7 @@ public class MyToursActivity extends AppCompatActivity implements MyToursScreen,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tours);
 
+        Hawk.init(this).build();
         ButterKnife.bind(this);
         TourApplication.injector.inject(this);
         setToolBar();
