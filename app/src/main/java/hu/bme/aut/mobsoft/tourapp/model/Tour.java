@@ -16,9 +16,6 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description = "")
 public class Tour {
 
-    @SerializedName("tour_id_c")
-    private Long id;
-
     @SerializedName("tour_id")
     private String tourId = null;
 
@@ -59,18 +56,9 @@ public class Tour {
     public Tour() {
     }
 
-    public Tour(Long id, String tourId, String tourName) {
-        this.id = id;
+    public Tour(String tourId, String tourName) {
         this.tourId = tourId;
         this.tourName = tourName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**

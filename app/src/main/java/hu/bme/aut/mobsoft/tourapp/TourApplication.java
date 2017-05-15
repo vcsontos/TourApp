@@ -1,10 +1,11 @@
 package hu.bme.aut.mobsoft.tourapp;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 
 import javax.inject.Inject;
 
@@ -33,7 +34,6 @@ public class TourApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
 
         injector = DaggerTourApplicationComponent.builder().
                 uIModule(
@@ -42,7 +42,7 @@ public class TourApplication extends Application {
 
         injector.inject(this);
         repository.open(getApplicationContext());
-
+        Fabric.with(this, new Crashlytics());
     }
 
     /**

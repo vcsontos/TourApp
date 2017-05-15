@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -171,9 +170,7 @@ public class NewTourActivity extends AppCompatActivity implements NewTourScreen,
 
     @OnClick(R.id.new_tour_btn)
     public void newTourBtn() {
-        Random rand = new Random();
-        long randNumber = (long)(rand.nextInt(10000) + 1);
-        Tour tour = new Tour(randNumber,UUID.randomUUID().toString(), tourName.getText().toString());
+        Tour tour = new Tour(UUID.randomUUID().toString(), tourName.getText().toString());
 
         DateFormat format = new SimpleDateFormat("yyyy.MM.dd", Locale.US);
         try {

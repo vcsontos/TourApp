@@ -1,5 +1,8 @@
 package hu.bme.aut.mobsoft.tourapp.ui.main;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.orhanobut.hawk.Hawk;
