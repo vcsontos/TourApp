@@ -5,6 +5,7 @@ import com.orhanobut.hawk.Hawk;
 import java.util.Calendar;
 import java.util.Date;
 
+import hu.bme.aut.mobsoft.tourapp.model.Tour;
 import hu.bme.aut.mobsoft.tourapp.model.User;
 
 /**
@@ -34,5 +35,18 @@ public class Utils {
         cal.setTime(date);
         cal.add(Calendar.DATE, days); //minus number would decrement the days
         return cal.getTime();
+    }
+
+    public static boolean isMemberUser(Tour tour) {
+        if (tour.getMembers() == null) {
+            return false;
+        } else {
+            for (User member : tour.getMembers()) {
+                if (Utils.getLoggedInUser().getPersonId().equals(member.getPersonId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

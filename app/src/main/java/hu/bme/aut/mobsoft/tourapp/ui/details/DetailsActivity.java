@@ -23,7 +23,6 @@ import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.TourApplication;
 import hu.bme.aut.mobsoft.tourapp.interactor.tours.events.Status;
 import hu.bme.aut.mobsoft.tourapp.model.Tour;
-import hu.bme.aut.mobsoft.tourapp.model.User;
 import hu.bme.aut.mobsoft.tourapp.navigation.DrawerManager;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
 import hu.bme.aut.mobsoft.tourapp.utils.StringUtil;
@@ -181,24 +180,11 @@ public class DetailsActivity extends AppCompatActivity implements DetailsScreen,
 
     @OnClick(R.id.join_tour)
     public void clickConnectionBtn() {
-        if (!isMemberUser()) {
+        if (!Utils.isMemberUser(tour)) {
             detailsPresenter.connectTour(tour);
         } else {
             detailsPresenter.disconnectTour(tour);
         }
-    }
-
-    private boolean isMemberUser() {
-        if (tour.getMembers() == null) {
-            return false;
-        } else {
-            for (User member : tour.getMembers()) {
-                if (Utils.getLoggedInUser().getPersonId().equals(member.getPersonId())) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override
