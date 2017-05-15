@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.orhanobut.hawk.Hawk;
 
 import javax.inject.Inject;
@@ -41,6 +43,8 @@ public class LoginActivity extends AppCompatActivity implements LoginScreen {
     @BindView(R.id.loginProgressBar)
     ProgressBarCircularIndeterminate progressBar;
 
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +53,17 @@ public class LoginActivity extends AppCompatActivity implements LoginScreen {
         Hawk.init(this).build();
         ButterKnife.bind(this);
         TourApplication.injector.inject(this);
+
+        TourApplication application = (TourApplication) getApplication();
+        mTracker = application.getDefaultTracker();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         loginPresenter.attachScreen(this);
+        mTracker.setScreenName("Image~LoginActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

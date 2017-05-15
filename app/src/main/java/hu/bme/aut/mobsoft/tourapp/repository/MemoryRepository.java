@@ -32,16 +32,16 @@ public class MemoryRepository implements Repository {
         User tourLeader = new User("1L", "Gipsz Jakab");
         tourLeader.setAge(40);
 
-        Tour tour1 = createTour("1L", "Nagy-Kevely", Category.WALKING, Difficulty.EASY,
+        Tour tour1 = createTour(1L,"1L", "Nagy-Kevely", Category.WALKING, Difficulty.EASY,
                 addDays(new Date(), 1), 5.0, "", "nagy_kevely", "", tourLeader, null);
 
-        Tour tour2 = createTour("2L", "Cserna rafting tour", Category.WATER, Difficulty.HARD,
+        Tour tour2 = createTour(2L, "2L", "Cserna rafting tour", Category.WATER, Difficulty.HARD,
                 addDays(new Date(), 10), 50.0, "", "", "", tourLeader, null);
 
-        Tour tour3 = createTour("3L", "Balaton-round", Category.CYCLING, Difficulty.MEDIUM,
+        Tour tour3 = createTour(3L, "3L", "Balaton-round", Category.CYCLING, Difficulty.MEDIUM,
                 addDays(new Date(), 15), 200.0, "", "balaton_round", "", tourLeader, null);
 
-        Tour tour4 = createTour("3L", "Bukk tour", Category.MOUNTAIN, Difficulty.MEDIUM,
+        Tour tour4 = createTour(4L, "4L", "Bukk tour", Category.MOUNTAIN, Difficulty.MEDIUM,
                 addDays(new Date(), 15), 20.0, "", "", "", tourLeader, null);
 
         tours = new ArrayList<>();
@@ -124,10 +124,10 @@ public class MemoryRepository implements Repository {
         return tours.contains(tour);
     }
 
-    private Tour createTour(String id, String name, Category category, Difficulty difficulty,
+    private Tour createTour(Long idL, String id, String name, Category category, Difficulty difficulty,
                             Date startDate, double distance, String desc, String imageUrl,
                             String location, User tourLeader, List<User> members) {
-        Tour tour = new Tour(id, name);
+        Tour tour = new Tour(idL,id, name);
         tour.setCategory(category);
         tour.setDifficulty(difficulty);
         tour.setStartDate(startDate);

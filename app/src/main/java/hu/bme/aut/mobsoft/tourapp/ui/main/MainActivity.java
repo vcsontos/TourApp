@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.orhanobut.hawk.Hawk;
@@ -67,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     private ToursAdapter toursAdapter;
     private List<Tour> tours;
 
+    private Tracker mTracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
         setToolBar();
         initNavigationDrawer(savedInstanceState);
         Hawk.init(this).build();
+
+        TourApplication application = (TourApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+
         if (!Utils.isUserLoggedIn()) {
             startActivity(new Intent(this, LoginActivity.class));
             return;
@@ -124,6 +132,10 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
     protected void onStart() {
         super.onStart();
         mainPresenter.attachScreen(this);
+
+        mTracker.setScreenName("Image~MainActivity");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+
         if (drawerManager.isDrawerOpen()) {
             drawerManager.getDrawer().closeDrawer();
         }
@@ -142,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements MainScreen,
         this.tours = tours;
         toursAdapter = new ToursAdapter(this, tours);
         toursRecyclerView.setAdapter(toursAdapter);
+
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Show tours")
+                .setAction("Show tours success").build());
     }
 
     @Override

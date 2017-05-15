@@ -32,7 +32,6 @@ public class SugarOrmRepository implements Repository {
         SugarContext.init(context);
 
         SugarRecord.deleteAll(User.class);
-        SugarRecord.deleteAll(Tour.class);
 
         User user = new User("2", "user");
         user.setAge(20);
@@ -107,7 +106,7 @@ public class SugarOrmRepository implements Repository {
             newMembers.add(Utils.getLoggedInUser());
             Gson gson = new Gson();
             results.get(0).setMembersStr(gson.toJson(newMembers));
-            SugarRecord.save(results.get(0));
+            SugarRecord.update(results.get(0));
             number = results.get(0).getMembers().size();
         }
 

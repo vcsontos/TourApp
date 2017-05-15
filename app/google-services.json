@@ -1,0 +1,38 @@
+{
+  "project_info": {
+    "project_number": "1055993007431",
+    "project_id": "tourapp-167708"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1055993007431:android:3c4cd7a9e81d72aa",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.mobsoft.tourapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZgXWOyU4qoLoGQ0rZQjazO2MRCR8vyss"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-99166692-1"
+          }
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
