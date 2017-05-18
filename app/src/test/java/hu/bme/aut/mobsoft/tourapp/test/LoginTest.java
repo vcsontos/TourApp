@@ -15,6 +15,8 @@ import org.robolectric.annotation.Config;
 
 import hu.bme.aut.mobsoft.tourapp.BuildConfig;
 import hu.bme.aut.mobsoft.tourapp.R;
+import hu.bme.aut.mobsoft.tourapp.model.User;
+import hu.bme.aut.mobsoft.tourapp.repository.Repository;
 import hu.bme.aut.mobsoft.tourapp.ui.login.LoginActivity;
 import hu.bme.aut.mobsoft.tourapp.ui.login.LoginPresenter;
 import hu.bme.aut.mobsoft.tourapp.ui.login.LoginScreen;
@@ -27,6 +29,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by valentin on 2017. 05. 15..
@@ -47,6 +50,23 @@ public class LoginTest {
     }
 
     @Test
+    public void testWhenUsernameAndPasswordAreNull() {
+        // GIVEN
+        LoginScreen loginScreen = mock(LoginScreen.class);
+        loginPresenter.attachScreen(loginScreen);
+
+        // WHEN
+        loginPresenter.login(null, null);
+
+        // THEN
+        verify(loginScreen, times(1)).showProgressBar();
+        verify(loginScreen, times(1)).hideProgressBar();
+        verify(loginScreen, times(1)).showMessage(R.string.invalid_login_credentials);
+        verify(loginScreen, never()).navigateToHome();
+        Assert.assertFalse(Utils.isUserLoggedIn());
+    }
+
+    @Test
     public void testWhenInvalidCredentials() {
         // GIVEN
         LoginScreen loginScreen = mock(LoginScreen.class);
@@ -64,12 +84,52 @@ public class LoginTest {
     }
 
     @Test
+    public void testWhenUserNotFound() {
+        // GIVEN
+        LoginScreen loginScreen = mock(LoginScreen.class);
+        loginPresenter.attachScreen(loginScreen);
+        Repository repository = mock(Repository.class);
+
+        // WHEN
+        when(repository.getUser("asd", "asd")).thenReturn(null);
+        loginPresenter.login("asd", "asd");
+
+        // THEN
+        verify(loginScreen, times(1)).showProgressBar();
+        verify(loginScreen, times(1)).hideProgressBar();
+        verify(loginScreen, times(1)).showMessage(R.string.invalid_login_credentials);
+        verify(loginScreen, never()).navigateToHome();
+        Assert.assertFalse(Utils.isUserLoggedIn());
+    }
+
+    @Test(expected = Exception.class)
+    public void testWhenLoginThrowsException() {
+        // GIVEN
+        LoginScreen loginScreen = mock(LoginScreen.class);
+        loginPresenter.attachScreen(loginScreen);
+        Repository repository = mock(Repository.class);
+
+        // WHEN
+        when(repository.getUser("asd", "asd")).thenThrow(new Exception("Repository is not exist"));
+        loginPresenter.login("asd", "asd");
+
+        // THEN
+        verify(loginScreen, times(1)).showProgressBar();
+        verify(loginScreen, times(1)).hideProgressBar();
+        verify(loginScreen, times(1)).navigateToHome();
+        verify(loginScreen, never()).showMessage(anyInt());
+        Assert.assertTrue(Utils.isUserLoggedIn());
+    }
+
+    @Test
     public void testWhenLoginSuccessful() {
         // GIVEN
         LoginScreen loginScreen = mock(LoginScreen.class);
         loginPresenter.attachScreen(loginScreen);
+        Repository repository = mock(Repository.class);
 
         // WHEN
+        when(repository.getUser("user", "user")).thenReturn(new User());
         loginPresenter.login("user", "user");
 
         // THEN

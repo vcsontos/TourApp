@@ -63,13 +63,17 @@ public class MemoryRepository implements Repository {
     @Override
     public User getUser(String username, String password) {
 
-        User user = new User(UUID.randomUUID().toString(), username);
-        user.setAge(20);
-        user.setAuthToken("1234567");
-        user.setExpiredDate(Utils.addDays(new Date(), 10));
-        user.setExperience(Experience.ADVANCED);
-        user.setGender(Gender.MALE);
-        user.setMyTours(myTours);
+        User user = null;
+
+        if ("user".equals(username)) {
+            user = new User(UUID.randomUUID().toString(), username);
+            user.setAge(20);
+            user.setAuthToken("1234567");
+            user.setExpiredDate(Utils.addDays(new Date(), 10));
+            user.setExperience(Experience.ADVANCED);
+            user.setGender(Gender.MALE);
+            user.setMyTours(myTours);
+        }
 
         return user;
     }
