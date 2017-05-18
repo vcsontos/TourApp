@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import hu.bme.aut.mobsoft.tourapp.R;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginInteractor;
+import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginStatus;
 import hu.bme.aut.mobsoft.tourapp.interactor.login.events.LoginEvent;
 import hu.bme.aut.mobsoft.tourapp.ui.Presenter;
 import hu.bme.aut.mobsoft.tourapp.utils.Constants;
@@ -71,10 +72,11 @@ public class LoginPresenter extends Presenter<LoginScreen> {
         } else {
             if (screen != null) {
                 screen.hideProgressBar();
-                if (event.getCode() == 200) {
+                if (event.getStatus() == LoginStatus.USER_FOUND) {
                     Utils.setLoggedInUser(event.getUser());
                     screen.navigateToHome();
-                } else if (event.getCode() == 404) {
+                } else if (event.getStatus() == LoginStatus.INVALID_CREDENTIALS
+                        || event.getStatus() == LoginStatus.USER_NOT_FOUND) {
                     screen.showMessage(R.string.invalid_login_credentials);
                 }
             }

@@ -22,6 +22,7 @@ import hu.bme.aut.mobsoft.tourapp.utils.RobolectricDaggerTestRunner;
 import hu.bme.aut.mobsoft.tourapp.utils.Utils;
 
 import static hu.bme.aut.mobsoft.tourapp.TestHelper.setTestInjector;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -41,36 +42,47 @@ public class LoginTest {
     public void setup() throws Exception {
         setTestInjector();
         Context context = Robolectric.setupActivity(LoginActivity.class);
-        Hawk.init(context);
+        Hawk.init(context).build();
         loginPresenter = new LoginPresenter();
     }
 
     @Test
-    public void testWhenCredentialsInvalid() {
+    public void testWhenInvalidCredentials() {
+        // GIVEN
         LoginScreen loginScreen = mock(LoginScreen.class);
         loginPresenter.attachScreen(loginScreen);
+
+        // WHEN
         loginPresenter.login("", "");
 
+        // THEN
+        verify(loginScreen, times(1)).showProgressBar();
+        verify(loginScreen, times(1)).hideProgressBar();
         verify(loginScreen, times(1)).showMessage(R.string.invalid_login_credentials);
         verify(loginScreen, never()).navigateToHome();
-
         Assert.assertFalse(Utils.isUserLoggedIn());
     }
 
     @Test
     public void testWhenLoginSuccessful() {
+        // GIVEN
         LoginScreen loginScreen = mock(LoginScreen.class);
         loginPresenter.attachScreen(loginScreen);
+
+        // WHEN
         loginPresenter.login("user", "user");
 
-        verify(loginScreen, never()).showMessage(R.string.invalid_login_credentials);
+        // THEN
+        verify(loginScreen, times(1)).showProgressBar();
+        verify(loginScreen, times(1)).hideProgressBar();
         verify(loginScreen, times(1)).navigateToHome();
-
+        verify(loginScreen, never()).showMessage(anyInt());
         Assert.assertTrue(Utils.isUserLoggedIn());
     }
 
     @After
     public void tearDown() {
         loginPresenter.detachScreen();
+        Hawk.destroy();
     }
 }

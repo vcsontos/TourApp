@@ -1,5 +1,6 @@
 package hu.bme.aut.mobsoft.tourapp.interactor.login.events;
 
+import hu.bme.aut.mobsoft.tourapp.interactor.login.LoginStatus;
 import hu.bme.aut.mobsoft.tourapp.model.User;
 
 /**
@@ -8,19 +9,19 @@ import hu.bme.aut.mobsoft.tourapp.model.User;
 
 public class LoginEvent {
 
-    private int code;
+    private LoginStatus status;
     private User user;
     private Throwable throwable;
 
     public LoginEvent() {
     }
 
-    public int getCode() {
-        return code;
+    public LoginStatus getStatus() {
+        return status;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setStatus(LoginStatus status) {
+        this.status = status;
     }
 
     public User getUser() {
